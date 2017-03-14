@@ -1,0 +1,18 @@
+<table ng-table="ngTableParamsObject" class="table">
+    <thead>
+        <tr>
+            <th ng-repeat="col in params.$params.columns"
+                ng-bind="col.title"
+            >
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="datum in $data">
+            <td ng-repeat="col in params.$params.columns"
+                ng-bind="datum[col.field]"
+            >
+            </td>
+        </tr>
+    </tbody>
+</table>
