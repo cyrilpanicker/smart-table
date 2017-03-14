@@ -31,8 +31,8 @@ angular.module('smartTable',['ngTable'])
     return {
         replace:true,
         templateUrl:'smart-table/smart-table.html',
-        controller:function($scope,$attrs){
+        controller:['$scope','$attrs',function($scope,$attrs){
             $scope.ngTableParamsObject = $scope.$eval($attrs.smartTable);
-        }
+        }]
     };
 });
