@@ -1,18 +1,28 @@
-<table ng-table="ngTableParamsObject" paginate="ngTableParamsObject.$params.isPaginationEnabled">
-    <thead>
-        <tr>
-            <th ng-repeat="col in params.$params.columns"
-                ng-bind="col.title"
-            >
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr ng-repeat="datum in $data">
-            <td ng-repeat="col in params.$params.columns"
-                ng-bind="datum[col.field]"
-            >
-            </td>
-        </tr>
-    </tbody>
-</table>
+<div class="smart-table-container">
+    <div ng-if="ngTableParamsObject.$params.isPaginationEnabled"
+        ng-include="'smart-table/smart-table-pagination.html'"
+    >
+    </div>
+    <table ng-table="ngTableParamsObject">
+        <thead>
+            <tr>
+                <th ng-repeat="col in params.$params.columns"
+                    ng-bind="col.title"
+                >
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="datum in $data">
+                <td ng-repeat="col in params.$params.columns"
+                    ng-bind="datum[col.field]"
+                >
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div ng-if="ngTableParamsObject.$params.isPaginationEnabled"
+        ng-include="'smart-table/smart-table-pagination.html'"
+    >
+    </div>
+</div>

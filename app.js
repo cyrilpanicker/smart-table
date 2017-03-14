@@ -1,18 +1,12 @@
 angular.module('app',['smartTable'])
 
-.controller('MainController',['$scope','SmartTableParams', function($scope,SmartTableParams){
+.controller('MainController',['$scope','$http','SmartTableParams', function($scope,$http,SmartTableParams){
 
-    var columns = [
-        { title: 'ID', field: 'id'},
-        { title: 'Name', field: 'name'}
-    ];
-
-    $scope.usersTable = new SmartTableParams({
-        columns:columns,
-        apiUrl:'/data/users.json',
-        pagination:{
-            test:'test'
-        }
+    $http({
+        method:'GET',
+        url:'/data/metadata.json'
+    }).then(function(response){
+        $scope.usersTable = new SmartTableParams(response.data);
     });
 
 }]);

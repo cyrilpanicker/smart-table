@@ -1,0 +1,16 @@
+{
+    "apiUrl":"/data/users.json",
+    "columns":[
+        {
+            "title":"ID",
+            "field": "id"
+        },
+        {
+            "title": "Name",
+            "field": "name"
+        }
+    ],
+    "pagination":{
+        "test":"test"
+    }
+}
