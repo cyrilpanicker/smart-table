@@ -9,7 +9,10 @@ angular.module('app',['smartTable'])
 
     $scope.usersTable = new SmartTableParams({
         columns:columns,
-        apiUrl:'/data/users.json'
+        apiUrl:'/data/users.json',
+        pagination:{
+            test:'test'
+        }
     });
 
 }]);

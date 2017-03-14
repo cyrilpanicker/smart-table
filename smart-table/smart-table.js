@@ -1,6 +1,6 @@
 angular.module('smartTable',['ngTable'])
 
-.factory('SmartTableParams',['ngTableParams','$http',function(ngTableParams,$http){
+.factory('SmartTableParams',['$http','ngTableParams',function($http,ngTableParams){
     return function(parameters,settings){
         if(!settings){
             settings = {};
@@ -9,9 +9,20 @@ angular.module('smartTable',['ngTable'])
             settings.getServerData = function($defer,params){
                 $http({method:'GET',url:parameters.apiUrl}).then(function(response){
                     $defer.resolve(response.data,params);
-                });   
+                });
             };
         }
+        if(!parameters.pagination){
+            parameters.isPaginationEnabled = false;
+        }else{
+            for (var property in parameters.pagination) {
+                if(parameters.pagination.hasOwnProperty(property)){
+                    parameters[property] = parameters.pagination[property]; 
+                }
+            }
+            parameters.isPaginationEnabled = true;            
+        }
+        delete parameters.pagination;
         return new ngTableParams(parameters,settings);
     };
 }])
@@ -19,9 +30,9 @@ angular.module('smartTable',['ngTable'])
 .directive('smartTable',function($compile){
     return {
         replace:true,
-        templateUrl:'smart-table.html',
-        link:function(scope,element,attributes){
-            scope.ngTableParamsObject = scope.$eval(attributes.smartTable);
+        templateUrl:'smart-table/smart-table.html',
+        controller:function($scope,$attrs){
+            $scope.ngTableParamsObject = $scope.$eval($attrs.smartTable);
         }
     };
 });
