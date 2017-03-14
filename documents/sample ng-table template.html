@@ -1,0 +1,21 @@
+<table ng-table="jobQueueTable" class="table" paginate="true">
+    <tbody>
+        <tr ng-repeat="request in $data">
+            <td data-title="'Request ID'" data-header-class="width8_percent" tooltip="{{request.requestKey}}" tooltip-position="up"tooltip-offset="105" text-truncate-from="8" ></td>
+            <td data-title="'Document Name'" tooltip="{{request.documentName}}" tooltip-position="up"tooltip-offset="105" text-truncate-from="45" break-all="true" class="td-word-break-all"></td>
+            <td data-title="'Document Type'" tooltip="{{request.documentType}}" tooltip-position="up"tooltip-offset="105" text-truncate-from="45" ></td>
+            <td data-title="'Loading Date'" tooltip="{{request.loadingDate}}" tooltip-position="up"tooltip-offset="105" text-truncate-from="45" ></td>
+            <td data-title="'Due Date'" tooltip="{{request.dueDate}}" tooltip-position="up"tooltip-offset="105" text-truncate-from="45" ></td>
+            
+            <td data-title="'Status'" tooltip="{{request.status}}" tooltip-position="up"tooltip-offset="105" text-truncate-from="45" ></td>
+            <td data-title="'Action'" data-header-class="width6_percent">
+                <a href="javascript:void(0);" ng-click="jobQueueHandlers.onStartAssignedJob(request.requestKey)">
+                    Process
+                </a>
+            </td>
+        </tr>
+        <tr ng-show="!jobQueueModel.isUpdating && !$data.length">
+            <td colspan="7">No records to show for the selected status.</td>
+        </tr>
+    </tbody>
+</table>

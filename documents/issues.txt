@@ -1,0 +1,1 @@
+- Header columns are created based on the number of columns created in table body. But columns in table body are themselves dynamic. So custom table header will have have to be used.

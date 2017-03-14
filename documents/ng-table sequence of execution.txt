@@ -1,0 +1,16 @@
+- compile function
+    - prepares columns array
+
+- user written controller of template containing the directive
+- ngTableParams factory with parameters passed by above controller
+    - creates new instance of 'ngTableParams' with user defined values for '$params' and assigns it to user defined property under controller $scope.
+
+
+- ngTableController - controller of the directive
+    - creates new instance of 'ngTableParams' with default values for '$params' and assigns it to 'params' property under directive $scope.
+    - sets a watch for 'params.$params' under directive scope.
+    - adds 'sortBy' function to directive scope.
+
+- link function
+    - assigns user created 'ngTableParams' instance present on parent scope to 'params' property on directive scope.
+    - sets a watch on user created 'ngTableParams' instance and repeats above step.
