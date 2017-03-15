@@ -1,0 +1,22 @@
+{
+  "name": "smart-table",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start":"node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cyrilpanicker/smart-table.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cyrilpanicker/smart-table/issues"
+  },
+  "homepage": "https://github.com/cyrilpanicker/smart-table#readme",
+  "dependencies": {
+    "express": "^4.15.2"
+  }
+}

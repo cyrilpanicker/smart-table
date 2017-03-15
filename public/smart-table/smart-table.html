@@ -1,5 +1,5 @@
 <div class="smart-table-container">
-    <div ng-if="ngTableParamsObject.$params.isPaginationEnabled"
+    <div ng-if="ngTableParamsObject.$params.paginate"
         ng-include="'smart-table/smart-table-pagination.html'"
     >
     </div>
@@ -21,7 +21,7 @@
             </tr>
         </tbody>
     </table>
-    <div ng-if="ngTableParamsObject.$params.isPaginationEnabled"
+    <div ng-if="ngTableParamsObject.$params.paginate"
         ng-include="'smart-table/smart-table-pagination.html'"
     >
     </div>

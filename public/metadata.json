@@ -1,5 +1,5 @@
 {
-    "apiUrl":"/data/users.json",
+    "apiUrl":"/api/users",
     "columns":[
         {
             "title":"ID",
@@ -11,6 +11,8 @@
         }
     ],
     "pagination":{
-        "test":"test"
-    }
+        "page":1,
+        "pagerSeriesCount": 4
+    },
+    "count": 5
 }
