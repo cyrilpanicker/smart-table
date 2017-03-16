@@ -6,42 +6,42 @@
     .directive('smartTable',[function(){
         return {
             replace:true,
+            scope:true,
             templateUrl:'smart-table/smart-table.html',
             controller:['$scope','$attrs',function($scope,$attrs){
                 var params;
 				var paginationTitle = '';
                 $scope.$watch($attrs.smartTable,function(_params){
-                    if(_params){
-                        $scope.ngTableParamsObject = params = _params;
-                        paginationTitle = params.$params.paginationTitleTemplate || 'Showing {FROM} to {TO} of {TOTAL}'; 
-                        if($attrs.onDataFetch && !params.$params.onDataFetch){
-                            params.$params.onDataFetch = $scope.$eval($attrs.onDataFetch);
-                        }
+                    if(!_params)return;
+                    $scope.ngTableParamsObject = params = _params;
+                    paginationTitle = params.$params.paginationTitleTemplate || 'Showing {FROM} to {TO} of {TOTAL}'; 
+                    if($attrs.smartTableDataFetchCallback && !params.$params.dataFetchCallback){
+                        params.$params.dataFetchCallback = $attrs.smartTableDataFetchCallback;
+                    }
+                    if($attrs.smartTableRequestParams && !params.$params.requestParams){
+                        params.$params.requestParams = $attrs.smartTableRequestParams;
                     }
                 });
    	            $scope.$on('ngTableAfterReloadData', function(){
-					if(params){
-						$scope.pages = params.generatePagesArray(params.page(), params.total(), params.count());
-						$scope.numPages = Math.ceil(params.total() / params.count());
-						updatePaginationTitle();
-					}
-   	            }, true);
+                    if(!params)return;
+                    $scope.pages = params.generatePagesArray(params.page(), params.total(), params.count());
+                    $scope.numPages = Math.ceil(params.total() / params.count());
+                    updatePaginationTitle();
+   	            });
    	            $scope.selectPage = function (page) {
    	                if (!!page && page.number && page.active) {
    	                    params.page(page.number);
    	                }
    	            };
    	            $scope.previous = function (disableFlag) {
-   	                if (!disableFlag) {
-   	                    var pagenumber = $scope.ngTableParamsObject.page() - 1;
-   	                    $scope.ngTableParamsObject.page(pagenumber);
-   	                }
+					if(disableFlag)return;
+					var pagenumber = $scope.ngTableParamsObject.page() - 1;
+					$scope.ngTableParamsObject.page(pagenumber);
    	            };
    	            $scope.next = function (disableFlag) {
-   	                if (!disableFlag) {
-   	                    var pagenumber = $scope.ngTableParamsObject.page() + 1;
-   	                    $scope.ngTableParamsObject.page(pagenumber);
-   	                }
+					if(disableFlag)return;
+					var pagenumber = $scope.ngTableParamsObject.page() + 1;
+					$scope.ngTableParamsObject.page(pagenumber);
    	            };
    	            var updatePaginationTitle = function () {
    	                var from = (params.page() - 1) * params.count() + 1;
@@ -60,22 +60,25 @@
 
     .factory('SmartTableParams',['$http','ngTableParams',function($http,ngTableParams){
         return function(parameters,settings){
-            var cachedResponse = null;
             var params = null;
+            var cachedResponse = null;
             var ngTableResetAndReload = null;
             var getServerData = function($defer,_params){
+                var directiveScope = params.settings().$scope;
+                var requestParams = directiveScope.$eval(params.$params.requestParams);
+                var dataFetchCallback = directiveScope.$eval(params.$params.dataFetchCallback);
                 $http({
-                    method:'GET',
+                    method:'POST',
                     url:parameters.apiUrl,
-                    params:{
+                    data:Object.assign({},requestParams,{
                         startPage : _params.pagerData.startPage,
                         endPage : _params.pagerData.endPage,
-                        pageSize : params.$params.count
-                    }
+                        pageSize : params.$params.count                        
+                    })
                 }).then(function(response){
                     cachedResponse = response.data;
-                    if(params.$params.onDataFetch && typeof params.$params.onDataFetch === 'function'){
-                        params.$params.onDataFetch(response.data,_params);
+                    if(dataFetchCallback && typeof dataFetchCallback === 'function'){
+                        dataFetchCallback(response.data,_params);
                     }
                     $defer.resolve(response.data,_params);
                 });                
@@ -99,7 +102,7 @@
                         parameters[property] = parameters.pagination[property]; 
                     }
                 }
-                parameters.paginate = true;            
+                parameters.paginate = true;
             }
             delete parameters.pagination;
             params = new ngTableParams(parameters,settings);
@@ -113,3 +116,25 @@
     }]);
 
 })(angular);
+
+
+if (typeof Object.assign != 'function') {
+    Object.assign = function(target, varArgs) {
+        'use strict';
+        if (target == null) {
+            throw new TypeError('Cannot convert undefined or null to object');
+        }
+        var to = Object(target);
+        for (var index = 1; index < arguments.length; index++) {
+            var nextSource = arguments[index];
+            if (nextSource != null) {
+                for (var nextKey in nextSource) {
+                    if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+                    	to[nextKey] = nextSource[nextKey];
+                    }
+                }
+            }
+        }
+        return to;
+    };
+}

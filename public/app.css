@@ -1,3 +1,8 @@
 nav li.selected{
     font-weight: bold;
 }
+
+nav ul li{
+    list-style: none;
+    display: inline;
+}

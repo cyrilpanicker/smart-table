@@ -1,12 +1,14 @@
 var express = require('express');
+var bodyParser=require('body-parser');
 
 var app = express();
+app.use(bodyParser.json());
 
 app.use(express.static('./public'));
 
-app.get('/api/users',(request,response) => {
-    var startPage = parseInt(request.query.startPage);
-    var endPage = parseInt(request.query.endPage);
+app.post('/api/users',(request,response) => {
+    var startPage = request.body.startPage;
+    var endPage = request.body.endPage;
     if(startPage===1 && endPage===4){
         response.send(data[0]);
     }else if(startPage===5 && endPage===8){

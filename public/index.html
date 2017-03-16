@@ -14,7 +14,13 @@
 
             <button ng-click="usersTable.resetAndReload()">Reload</button>
 
-            <div smart-table = "usersTable" on-data-fetch="onUsersDataFetch" ></div>
+            <div smart-table="usersTable"></div>
+
+            <!--<div smart-table="usersTable"
+                smart-table-data-fetch-callback="onUsersDataFetch"
+                smart-table-request-params="searchParams"
+            >
+            </div>-->
 
         </div>
     </body>
