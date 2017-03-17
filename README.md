@@ -2,6 +2,7 @@
 - run `npm start` to run the demo application.
 
 ***example :***
+
 *Files to include :*
 ```html
         <script src="/libs/jquery.min.js"></script>
