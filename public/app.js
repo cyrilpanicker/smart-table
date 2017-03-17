@@ -1,6 +1,11 @@
 angular.module('app',['smartTable'])
 
-.controller('MainController',['$scope','$http','SmartTableParams','$timeout', function($scope,$http,SmartTableParams,$timeout){
+.controller('MainController',['$scope','$http','SmartTableParams','$interval', function($scope,$http,SmartTableParams,$interval){
+
+	$scope.usersTable = null;
+	$scope.searchParams = {id:null,name:null};
+	$scope.searchModel = {id:null,name:null};
+	var intervalPromise = null;
 
 	$http({
 		method:'GET',
@@ -9,21 +14,37 @@ angular.module('app',['smartTable'])
 		$scope.usersTable = new SmartTableParams(response.data);
 	});
 
-	// $scope.onUsersDataFetch = function(data,params){
-	// 	console.log('---------------');
-	// 	console.log('data fetched');
-	// 	console.log(data);
-	// 	console.log(params);
-	// 	console.log('---------------');
-	// };
+	$scope.onSearch = function(searchModel){
+		$scope.searchParams = angular.copy($scope.searchModel);
+		$scope.usersTable.resetAndReload();
+	};
 
-	// $scope.searchParams = {
-	// 	a:['asd','asd']
-	// };
+	$scope.onReset = function(){
+		$scope.searchModel = {id:null,name:null};
+		$scope.searchParams = {id:null,name:null};
+		$scope.usersTable.resetAndReload();
+	};
 
-	// $timeout(function(){
-	// 	$scope.searchParams.a={b:['edg','asd']};
-	// 	$scope.searchParams.b=[1,2,3];
-	// },5000);
+	$scope.onUsersDataFetchStart = function(){
+		$scope.message = 'Fetching data';
+		intervalPromise = $interval(function(){
+			$scope.message = $scope.message+'.';
+		},100);
+	};
+
+	$scope.onUsersDataFetchEnd = function(){
+		$scope.message = '';
+		if(intervalPromise){
+			$interval.cancel(intervalPromise);
+		}
+	};
+
+	$scope.onUsersDataFetch = function(data,params){
+		console.log('---------------');
+		console.log('data fetched');
+		console.log(data);
+		console.log(params);
+		console.log('---------------');
+	};
 
 }]);

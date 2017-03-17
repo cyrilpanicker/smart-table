@@ -12,15 +12,22 @@
 
             <h2>SMART-TABLE</h2>
 
-            <button ng-click="usersTable.resetAndReload()">Reload</button>
+            <input ng-model="searchModel.id" placeholder="Search Id" />
+            <input ng-model="searchModel.name" placeholder="Search Name" />
+            <button ng-click="onSearch(searchModel)">Search &amp; Load Data</button><br/><br/>
+            <button ng-click="usersTable.resetAndReload()">Reload Data</button>
+            <button ng-click="usersTable.resetAndReload(true)">Retain Sorting &amp; Reload Data</button>
+            <button ng-click="onReset()">Reset Search &amp; Reload Data</button><br/><br/>
 
-            <div smart-table="usersTable"></div>
-
-            <!--<div smart-table="usersTable"
-                smart-table-data-fetch-callback="onUsersDataFetch"
+            <div smart-table="usersTable"
                 smart-table-request-params="searchParams"
+                smart-table-data-fetch-start-callback="onUsersDataFetchStart"
+                smart-table-data-fetch-end-callback="onUsersDataFetchEnd"
+                ng-show="!message"
             >
-            </div>-->
+            </div>
+
+            <div ng-bind="message"></div>
 
         </div>
     </body>

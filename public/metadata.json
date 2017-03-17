@@ -3,15 +3,16 @@
     "columns":[
         {
             "title":"ID",
-            "field": "id"
+            "field": "id",
+            "sortable":true
         },
         {
             "title": "Name",
-            "field": "name"
+            "field": "name",
+            "sortable":true
         }
     ],
-    "pagination":{
-        "pagerSeriesCount": 4
-    },
+    "paginate":true,
+    "pagerSeriesCount": 4,
     "count": 5
 }

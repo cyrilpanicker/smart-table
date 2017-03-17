@@ -15,8 +15,11 @@
                     if(!_params)return;
                     $scope.ngTableParamsObject = params = _params;
                     paginationTitle = params.$params.paginationTitleTemplate || 'Showing {FROM} to {TO} of {TOTAL}'; 
-                    if($attrs.smartTableDataFetchCallback && !params.$params.dataFetchCallback){
-                        params.$params.dataFetchCallback = $attrs.smartTableDataFetchCallback;
+                    if($attrs.smartTableDataFetchStartCallback && !params.$params.dataFetchStartCallback){
+                        params.$params.dataFetchStartCallback = $attrs.smartTableDataFetchStartCallback;
+                    }
+                    if($attrs.smartTableDataFetchEndCallback && !params.$params.dataFetchEndCallback){
+                        params.$params.dataFetchEndCallback = $attrs.smartTableDataFetchEndCallback;
                     }
                     if($attrs.smartTableRequestParams && !params.$params.requestParams){
                         params.$params.requestParams = $attrs.smartTableRequestParams;
@@ -63,24 +66,36 @@
             var params = null;
             var cachedResponse = null;
             var ngTableResetAndReload = null;
+            var sortParams = {sortColumn:null,sortOrder:null};
+            var currentSortColumn = null;
+            var pagerParams = {};
             var getServerData = function($defer,_params){
                 var directiveScope = params.settings().$scope;
                 var requestParams = directiveScope.$eval(params.$params.requestParams);
-                var dataFetchCallback = directiveScope.$eval(params.$params.dataFetchCallback);
+                var dataFetchStartCallback = directiveScope.$eval(params.$params.dataFetchStartCallback);
+                var dataFetchEndCallback = directiveScope.$eval(params.$params.dataFetchEndCallback);
+                pagerParams.startPage = _params.pagerData.startPage;
+                pagerParams.endPage = _params.pagerData.endPage;
+                pagerParams.pageSize = params.$params.count;
+                if(dataFetchStartCallback && typeof dataFetchStartCallback === 'function'){
+                    dataFetchStartCallback($defer,_params);
+                }
                 $http({
                     method:'POST',
                     url:parameters.apiUrl,
-                    data:Object.assign({},requestParams,{
-                        startPage : _params.pagerData.startPage,
-                        endPage : _params.pagerData.endPage,
-                        pageSize : params.$params.count                        
-                    })
+                    data:Object.assign({},requestParams,sortParams,pagerParams)
                 }).then(function(response){
                     cachedResponse = response.data;
-                    if(dataFetchCallback && typeof dataFetchCallback === 'function'){
-                        dataFetchCallback(response.data,_params);
+                    if(dataFetchEndCallback && typeof dataFetchEndCallback === 'function'){
+                        dataFetchEndCallback(response.data,_params);
                     }
                     $defer.resolve(response.data,_params);
+                },function(error){
+                    console.log('SMART-TABLE - Error occurred while fetching data.');
+                    console.log(error);
+                    if(dataFetchEndCallback && typeof dataFetchEndCallback === 'function'){
+                        dataFetchEndCallback(null,_params,error);
+                    }
                 });                
             };
             var getCachedData = function($defer,params){
@@ -90,26 +105,36 @@
                     getServerData($defer,params);
                 }
             };
+            var serverSortBy = function(column){
+                sortParams.sortColumn = column;
+                if(sortParams.sortColumn === currentSortColumn){
+                    sortParams.sortOrder = sortParams.sortOrder==='asc' ? 'desc' : 'asc';
+                }else{
+                    sortParams.sortOrder = 'asc';
+                    currentSortColumn = sortParams.sortColumn;
+                }
+                params.resetAndReload(true);
+            };
             settings = settings || {};
             settings.getServerData = settings.getServerData || getServerData;
             settings.getCachedData = settings.getCachedData || getCachedData;
             settings.getData = settings.getData || getCachedData;
-            if(!parameters.pagination){
-                parameters.paginate = false;
-            }else{
-                for (var property in parameters.pagination) {
-                    if(parameters.pagination.hasOwnProperty(property)){
-                        parameters[property] = parameters.pagination[property]; 
-                    }
-                }
-                parameters.paginate = true;
-            }
+            settings.serverSortBy = settings.serverSortBy || serverSortBy;
             delete parameters.pagination;
             params = new ngTableParams(parameters,settings);
             ngTableResetAndReload = params.resetAndReload;
-            params.resetAndReload = function(){
-                cachedResponse = null;
+            params.resetAndReload = function(retainSort){
+                if(!retainSort){
+                    params.resetSorting();
+                }
+                params.resetCachedResponse();
                 ngTableResetAndReload();
+            };
+            params.resetSorting = function(reload){
+                sortParams = {sortColumn:null,sortOrder:null};
+            };
+            params.resetCachedResponse = function(){
+                cachedResponse = null;
             };
             return params;
         };

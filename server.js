@@ -7,19 +7,21 @@ app.use(bodyParser.json());
 app.use(express.static('./public'));
 
 app.post('/api/users',(request,response) => {
-    var startPage = request.body.startPage;
-    var endPage = request.body.endPage;
-    if(startPage===1 && endPage===4){
-        response.send(data[0]);
-    }else if(startPage===5 && endPage===8){
-        response.send(data[1]);
-    }else if(startPage===9 && endPage===12){
-        response.send(data[2]);
-    }else if(startPage===13 && endPage===13){
-        response.send(data[3]);
-    }else{
-        console.log(startPage,endPage);
-    }
+    setTimeout(function(){
+        var startPage = request.body.startPage;
+        var endPage = request.body.endPage;
+        if(startPage===1 && endPage===4){
+            response.send(data[0]);
+        }else if(startPage===5 && endPage===8){
+            response.send(data[1]);
+        }else if(startPage===9 && endPage===12){
+            response.send(data[2]);
+        }else if(startPage===13 && endPage===13){
+            response.send(data[3]);
+        }else{
+            console.log(startPage,endPage);
+        }
+    },1000);
 });
 
 app.listen(8080,function(){

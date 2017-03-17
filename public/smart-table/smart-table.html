@@ -8,6 +8,7 @@
             <tr>
                 <th ng-repeat="col in params.$params.columns"
                     ng-bind="col.title"
+                    ng-click="col.sortable && params.serverSortBy(col.field)"
                 >
                 </th>
             </tr>
