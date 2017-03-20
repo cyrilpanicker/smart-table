@@ -1,0 +1,85 @@
+.smart-table{
+    *{
+        box-sizing: border-box;
+    }
+    table{
+        color:#333;
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: fixed;
+        font-size: 100%;
+        th{
+            text-align: left;
+            font-weight: bold;
+            line-height: 1.42857143;
+            color: #567084;
+            background-color: lightblue;
+            border: 1px solid #C6C6C6;
+            border-top: 0px;
+            padding: 9px 8px;
+        }
+        tbody{
+            tr{
+                background-color: #FFF;
+                &:nth-child(2n){
+                    background-color: #F7F7F7;
+                }
+            }
+            td{
+                padding: 8px;
+                line-height: 1.42857143;
+                border:1px solid #C6C6C6;
+                border-bottom: 0px;
+            }
+        }
+    }   
+    nav{
+        background-color: #F5F5F5;
+        padding: 0.5em;
+        border: 1px solid #C6C6C6;
+        min-height: 44px;
+        p{
+            font-weight: bold;
+            color: #666;
+            line-height: 2em;
+            float: left;
+            margin: 0;
+        }
+        ul{
+            float: right;
+            list-style: none;
+            margin: 0;
+        }
+        li{
+            background-color: #E9E9E9;
+            border: 1px solid #C9C9C9;
+            margin-right: 0.5em;
+            border-radius: 2px;
+            float: left;
+            &:hover:not(.disabled), &.selected:not(.disabled){
+                background-color: #C2DDF2;
+                border-color: #A6C2D8;
+                color: #214A66;
+            }
+            a{
+                float: left;
+                text-decoration: none;
+                padding: 6px 12px;
+                line-height: 1;
+                color: #7B7B7B;
+                font-size: 11px;
+                min-width: 17px;
+                text-align: center;
+                font-weight: bold;
+                cursor: pointer;
+            }
+            &.previous a, &.next a{
+                padding-left: 6px;
+                padding-right: 6px;
+            }
+            &.disabled a{
+                cursor: not-allowed;
+            }
+        }
+    }
+}

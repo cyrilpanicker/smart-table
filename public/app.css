@@ -1,8 +1,11 @@
-nav li.selected{
-    font-weight: bold;
+
+
+body{
+    font-size: 14px;
+    font-family: pt_sansregular, sans-serif;
+    margin: 20px;
 }
 
-nav ul li{
-    list-style: none;
-    display: inline;
+.smart-table{
+    margin:30px;
 }

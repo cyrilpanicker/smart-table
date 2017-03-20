@@ -1,4 +1,4 @@
-<div class="smart-table-container">
+<div class="smart-table">
     <div ng-if="ngTableParamsObject.$params.paginate"
         ng-include="'smart-table/smart-table-pagination.html'"
     >
@@ -7,9 +7,9 @@
         <thead>
             <tr>
                 <th ng-repeat="col in params.$params.columns"
-                    ng-bind="col.title"
                     ng-click="col.sortable && params.serverSortBy(col.field)"
                 >
+                    <div ng-bind="col.title"></div>
                 </th>
             </tr>
         </thead>

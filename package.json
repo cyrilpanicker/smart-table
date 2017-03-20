@@ -4,6 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
+    "compile:sass":"node-sass --output-style expanded public/smart-table/smart-table.scss public/smart-table/smart-table.css",
+    "watch:compile:sass":"npm run compile:sass && node-sass --watch --output-style expanded public/smart-table/smart-table.scss public/smart-table/smart-table.css",
     "start": "node server.js"
   },
   "repository": {
@@ -19,5 +21,8 @@
   "dependencies": {
     "body-parser": "^1.17.1",
     "express": "^4.15.2"
+  },
+  "devDependencies": {
+    "node-sass": "^4.5.0"
   }
 }

@@ -120,7 +120,6 @@
             settings.getCachedData = settings.getCachedData || getCachedData;
             settings.getData = settings.getData || getCachedData;
             settings.serverSortBy = settings.serverSortBy || serverSortBy;
-            delete parameters.pagination;
             params = new ngTableParams(parameters,settings);
             ngTableResetAndReload = params.resetAndReload;
             params.resetAndReload = function(retainSort){

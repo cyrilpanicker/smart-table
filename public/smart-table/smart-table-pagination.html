@@ -1,9 +1,9 @@
 <nav ng-init="params=ngTableParamsObject" ng-show="params.total()"> 
     <p>{{paginationTitle}}</p>
     <ul>
-        <li ng-class="{'disabled': ngTableParamsObject.page() === 1}">
+        <li class="previous" ng-class="{'disabled': ngTableParamsObject.page() === 1}">
             <a href="" ng-click="previous(ngTableParamsObject.page() === 1)">
-                <span>Previous</span>
+                <span>« PREV</span>
             </a>
         </li>
         <li ng-class="{'selected': ngTableParamsObject.page() == page.number}" ng-repeat="page in pages">
@@ -11,9 +11,9 @@
                 <span ng-bind="page.number"></span>
             </a>
         </li>
-        <li ng-class="{'disabled': ngTableParamsObject.page() === numPages}">
+        <li class="next" ng-class="{'disabled': ngTableParamsObject.page() === numPages}">
             <a href="" ng-click="next(ngTableParamsObject.page() === numPages)">
-                <span>Next</span>
+                <span>NEXT »</span>
             </a>
         </li>
     </ul>
