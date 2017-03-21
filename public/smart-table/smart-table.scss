@@ -17,6 +17,39 @@
             border: 1px solid #C6C6C6;
             border-top: 0px;
             padding: 9px 8px;
+            &.sortable{
+                cursor:pointer;
+                div{
+                    position: relative;
+                    &:before, &:after{
+                        content: "";
+                        position: absolute;
+                        top:50%;
+                        right: 8px;
+                        opacity: 0.3;
+                        visibility: visible;
+                        border-right: 4px solid transparent;
+                        border-left: 4px solid transparent;
+                    }
+                    &:before{
+                        margin-top: 2px;
+                        border-bottom: none;
+                        border-top: 4px solid #000;
+                    }
+                    &:after{
+                        margin-top: -4px;
+                        border-top: none;
+                        border-bottom: 4px solid #000;
+                    }
+                    &:hover:before, &:hover:after{
+                        opacity: 1;
+                    }
+                }
+                &.sort-asc div:before, &.sort-desc div:after{
+                    visibility: hidden;
+                    margin-top: auto;
+                }
+            }
         }
         tbody{
             tr{

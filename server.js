@@ -7,7 +7,7 @@ app.use(bodyParser.json());
 app.use(express.static('./public'));
 
 app.post('/api/users',(request,response) => {
-    setTimeout(function(){
+    // setTimeout(function(){
         var startPage = request.body.startPage;
         var endPage = request.body.endPage;
         if(startPage===1 && endPage===4){
@@ -21,7 +21,7 @@ app.post('/api/users',(request,response) => {
         }else{
             console.log(startPage,endPage);
         }
-    },1000);
+    // },1000);
 });
 
 app.listen(8080,function(){

@@ -8,6 +8,11 @@
             <tr>
                 <th ng-repeat="col in params.$params.columns"
                     ng-click="col.sortable && params.serverSortBy(col.field)"
+                    ng-class="{
+                        'sortable':col.sortable,
+                        'sort-asc':sortParams.sortColumn===col.field && sortParams.sortOrder==='asc',
+                        'sort-desc':sortParams.sortColumn===col.field && sortParams.sortOrder==='desc'
+                    }"
                 >
                     <div ng-bind="col.title"></div>
                 </th>

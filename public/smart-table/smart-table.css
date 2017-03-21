@@ -21,6 +21,46 @@
   padding: 9px 8px;
 }
 
+.smart-table table th.sortable {
+  cursor: pointer;
+}
+
+.smart-table table th.sortable div {
+  position: relative;
+}
+
+.smart-table table th.sortable div:before, .smart-table table th.sortable div:after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 8px;
+  opacity: 0.3;
+  visibility: visible;
+  border-right: 4px solid transparent;
+  border-left: 4px solid transparent;
+}
+
+.smart-table table th.sortable div:before {
+  margin-top: 2px;
+  border-bottom: none;
+  border-top: 4px solid #000;
+}
+
+.smart-table table th.sortable div:after {
+  margin-top: -4px;
+  border-top: none;
+  border-bottom: 4px solid #000;
+}
+
+.smart-table table th.sortable div:hover:before, .smart-table table th.sortable div:hover:after {
+  opacity: 1;
+}
+
+.smart-table table th.sortable.sort-asc div:before, .smart-table table th.sortable.sort-desc div:after {
+  visibility: hidden;
+  margin-top: auto;
+}
+
 .smart-table table tbody tr {
   background-color: #FFF;
 }

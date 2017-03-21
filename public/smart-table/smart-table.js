@@ -71,6 +71,7 @@
             var pagerParams = {};
             var getServerData = function($defer,_params){
                 var directiveScope = params.settings().$scope;
+                directiveScope.sortParams = sortParams;
                 var requestParams = directiveScope.$eval(params.$params.requestParams);
                 var dataFetchStartCallback = directiveScope.$eval(params.$params.dataFetchStartCallback);
                 var dataFetchEndCallback = directiveScope.$eval(params.$params.dataFetchEndCallback);

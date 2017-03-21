@@ -4,12 +4,11 @@
         {
             "title":"ID",
             "field": "id",
-            "class":"id"
+            "sortable":true
         },
         {
             "title": "Name",
             "field": "name",
-            "class":"name",
             "sortable":true
         }
     ],
