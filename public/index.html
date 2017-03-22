@@ -20,15 +20,11 @@
             <button ng-click="usersTable.resetAndReload(true)">Retain Sorting &amp; Reload Data</button>
             <button ng-click="onReset()">Reset Search &amp; Reload Data</button><br/><br/>
 
-            <div smart-table="usersTable"
-                smart-table-request-params="searchParams"
-                smart-table-data-fetch-start-callback="onUsersDataFetchStart"
-                smart-table-data-fetch-end-callback="onUsersDataFetchEnd"
-                ng-show="!message"
+            <div smart-table="usersTable" request-params="searchParams"
+                on-fetch-start="onUsersDataFetchStart"
+                on-fetch-end="onUsersDataFetchEnd"
             >
             </div>
-
-            <div ng-bind="message"></div>
 
         </div>
     </body>

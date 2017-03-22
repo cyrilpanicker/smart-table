@@ -15,14 +15,14 @@
                     if(!_params)return;
                     $scope.ngTableParamsObject = params = _params;
                     paginationTitle = params.$params.paginationTitleTemplate || 'Showing {FROM} to {TO} of {TOTAL}'; 
-                    if($attrs.smartTableDataFetchStartCallback && !params.$params.dataFetchStartCallback){
-                        params.$params.dataFetchStartCallback = $attrs.smartTableDataFetchStartCallback;
+                    if($attrs.onFetchStart && !params.$params.dataFetchStartCallback){
+                        params.$params.dataFetchStartCallback = $attrs.onFetchStart;
                     }
-                    if($attrs.smartTableDataFetchEndCallback && !params.$params.dataFetchEndCallback){
-                        params.$params.dataFetchEndCallback = $attrs.smartTableDataFetchEndCallback;
+                    if($attrs.onFetchEnd && !params.$params.dataFetchEndCallback){
+                        params.$params.dataFetchEndCallback = $attrs.onFetchEnd;
                     }
-                    if($attrs.smartTableRequestParams && !params.$params.requestParams){
-                        params.$params.requestParams = $attrs.smartTableRequestParams;
+                    if($attrs.requestParams && !params.$params.requestParams){
+                        params.$params.requestParams = $attrs.requestParams;
                     }
                 });
    	            $scope.$on('ngTableAfterReloadData', function(){

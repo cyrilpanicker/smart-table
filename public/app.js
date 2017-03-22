@@ -26,25 +26,11 @@ angular.module('app',['smartTable'])
 	};
 
 	$scope.onUsersDataFetchStart = function(){
-		$scope.message = 'Fetching data';
-		intervalPromise = $interval(function(){
-			$scope.message = $scope.message+'.';
-		},100);
+		console.log('start');
 	};
 
 	$scope.onUsersDataFetchEnd = function(){
-		$scope.message = '';
-		if(intervalPromise){
-			$interval.cancel(intervalPromise);
-		}
-	};
-
-	$scope.onUsersDataFetch = function(data,params){
-		console.log('---------------');
-		console.log('data fetched');
-		console.log(data);
-		console.log(params);
-		console.log('---------------');
+		console.log('end');
 	};
 
 }]);
