@@ -9,54 +9,92 @@
             scope:true,
             templateUrl:'smart-table/smart-table.html',
             controller:['$scope','$attrs',function($scope,$attrs){
-                var params;
-				var paginationTitle = '';
+                var params = null;
+                var model = $scope.smartTableModel = {};
+                var currentData = null;
+                model.dataFetchStartCallbackString = $attrs.onFetchStart;
+                model.dataFetchEndCallbackString = $attrs.onFetchEnd;
+                model.rowSelectCallbackString = $attrs.onRowSelect;
+                model.requestParamsString = $attrs.requestParams;
+                model.selectedRowsObjectString = $attrs.selectedRows;
+                model.sortParams = {sortColumn:null,sortOrder:null};
+                model.selectedRows = [];
+                model.selectPage = function (page) {
+                    if (!!page && page.number && page.active) {
+                        params.page(page.number);
+                    }
+                };
+                model.previous = function (disableFlag) {
+                    if(disableFlag)return;
+                    var pagenumber = params.page() - 1;
+                    params.page(pagenumber);
+                };
+                model.next = function (disableFlag) {
+                    if(disableFlag)return;
+                    var pagenumber = params.page() + 1;
+                    params.page(pagenumber);
+                };
+                model.resetSelectedRows = function(){
+                    currentData.forEach(function(datum){
+                        datum._isSelected = false;
+                    });
+                };
+                model.selectAllRows = function(){
+                    currentData.forEach(function(datum){
+                        datum._isSelected = true;
+                    });
+                };
+                model.onSelectAllClick = function(event){
+                    if(event.target.checked){
+                        model.selectAllRows();
+                    }else{
+                        model.resetSelectedRows();
+                    }
+                    model.updateSelectedRows();
+                };
+                model.updateSelectedRows = function(){
+                    var selectedRows = currentData.filter(function(datum){return datum._isSelected;});
+                    if(selectedRows.length === currentData.length){
+                        model.allRowsSelected = true;
+                    }else{
+                        model.allRowsSelected = false;
+                    }
+                    var rowSelectCallback = $scope.$eval(model.rowSelectCallbackString);
+                    if(rowSelectCallback && typeof rowSelectCallback === 'function'){
+                        if(!currentData){
+                            rowSelectCallback(null);
+                        }else{
+                            rowSelectCallback(selectedRows);
+                        }
+                    }
+                };
                 $scope.$watch($attrs.smartTable,function(_params){
                     if(!_params)return;
-                    $scope.ngTableParamsObject = params = _params;
-                    paginationTitle = params.$params.paginationTitleTemplate || 'Showing {FROM} to {TO} of {TOTAL}'; 
-                    if($attrs.onFetchStart && !params.$params.dataFetchStartCallback){
-                        params.$params.dataFetchStartCallback = $attrs.onFetchStart;
-                    }
-                    if($attrs.onFetchEnd && !params.$params.dataFetchEndCallback){
-                        params.$params.dataFetchEndCallback = $attrs.onFetchEnd;
-                    }
-                    if($attrs.requestParams && !params.$params.requestParams){
-                        params.$params.requestParams = $attrs.requestParams;
-                    }
+                    params = $scope.ngTableParamsObject = _params;
+                    model.paginationTitleTemplate = _params.$params.paginationTitleTemplate || 'Showing {FROM} to {TO} of {TOTAL}';
+                    model.noRecordsMessage = _params.$params.noRecordsMessage || 'No records to show.';
+                    model.loadingMessage = _params.$params.loadingMessage || 'Loading data';
                 });
-   	            $scope.$on('ngTableAfterReloadData', function(){
+   	            $scope.$on('ngTableAfterReloadData', function(event){
                     if(!params)return;
-                    $scope.pages = params.generatePagesArray(params.page(), params.total(), params.count());
-                    $scope.numPages = Math.ceil(params.total() / params.count());
-                    updatePaginationTitle();
-   	            });
-   	            $scope.selectPage = function (page) {
-   	                if (!!page && page.number && page.active) {
-   	                    params.page(page.number);
-   	                }
-   	            };
-   	            $scope.previous = function (disableFlag) {
-					if(disableFlag)return;
-					var pagenumber = $scope.ngTableParamsObject.page() - 1;
-					$scope.ngTableParamsObject.page(pagenumber);
-   	            };
-   	            $scope.next = function (disableFlag) {
-					if(disableFlag)return;
-					var pagenumber = $scope.ngTableParamsObject.page() + 1;
-					$scope.ngTableParamsObject.page(pagenumber);
-   	            };
-   	            var updatePaginationTitle = function () {
+                    model.pages = params.generatePagesArray(params.page(), params.total(), params.count());
+                    model.numPages = Math.ceil(params.total() / params.count());
    	                var from = (params.page() - 1) * params.count() + 1;
    	                var to = params.page() * params.count();
    	                if (to > params.total()) {
    	                    to = params.total();
    	                }
-   	                $scope.paginationTitle = paginationTitle
+   	                model.paginationTitle = model.paginationTitleTemplate
 					   .replace('{FROM}', from)
 					   .replace('{TO}', to)
 					   .replace('{TOTAL}', params.total());
-   	            };
+                    currentData = event.targetScope.$data;
+                    if(currentData){
+                        model.resetSelectedRows();
+                    }
+                    model.updateSelectedRows();
+                    model.allRowsSelected = false;
+   	            });
             }]
         };
     }])
@@ -65,38 +103,47 @@
         return function(parameters,settings){
             var params = null;
             var cachedResponse = null;
-            var ngTableResetAndReload = null;
-            var sortParams = {sortColumn:null,sortOrder:null};
             var currentSortColumn = null;
-            var pagerParams = {};
+            var _scope = null;
+            var model = null;
+            var ngTableResetAndReload = null;
+            var postData = null;
             var getServerData = function($defer,_params){
-                var directiveScope = params.settings().$scope;
-                directiveScope.sortParams = sortParams;
-                var requestParams = directiveScope.$eval(params.$params.requestParams);
-                var dataFetchStartCallback = directiveScope.$eval(params.$params.dataFetchStartCallback);
-                var dataFetchEndCallback = directiveScope.$eval(params.$params.dataFetchEndCallback);
-                pagerParams.startPage = _params.pagerData.startPage;
-                pagerParams.endPage = _params.pagerData.endPage;
-                pagerParams.pageSize = params.$params.count;
+                _scope = params.settings().$scope;
+                model = _scope.smartTableModel;
+                // TODO:
+                // _scope.$watch('$data',function(data){
+                //     console.log('data');
+                // });
+                var requestParams = _scope.$eval(model.requestParamsString);
+                var dataFetchStartCallback = _scope.$eval(model.dataFetchStartCallbackString);
+                var dataFetchEndCallback = _scope.$eval(model.dataFetchEndCallbackString);
+                postData = Object.assign({},requestParams,model.sortParams);
+                if(params.$params.paginate){
+                    postData = Object.assign(postData,_params.pagerData,{pageSize:params.$params.count});
+                }
+                model.loading = true;
                 if(dataFetchStartCallback && typeof dataFetchStartCallback === 'function'){
                     dataFetchStartCallback($defer,_params);
                 }
                 $http({
                     method:'POST',
                     url:parameters.apiUrl,
-                    data:Object.assign({},requestParams,sortParams,pagerParams)
+                    data:postData
                 }).then(function(response){
                     cachedResponse = response.data;
+                    $defer.resolve(response.data,_params);
                     if(dataFetchEndCallback && typeof dataFetchEndCallback === 'function'){
                         dataFetchEndCallback(response.data,_params);
                     }
-                    $defer.resolve(response.data,_params);
+                    model.loading = false;
                 },function(error){
                     console.log('SMART-TABLE - Error occurred while fetching data.');
                     console.log(error);
                     if(dataFetchEndCallback && typeof dataFetchEndCallback === 'function'){
                         dataFetchEndCallback(null,_params,error);
                     }
+                    model.loading = false;
                 });                
             };
             var getCachedData = function($defer,params){
@@ -107,12 +154,12 @@
                 }
             };
             var serverSortBy = function(column){
-                sortParams.sortColumn = column;
-                if(sortParams.sortColumn === currentSortColumn){
-                    sortParams.sortOrder = sortParams.sortOrder==='asc' ? 'desc' : 'asc';
+                model.sortParams.sortColumn = column;
+                if(model.sortParams.sortColumn === currentSortColumn){
+                    model.sortParams.sortOrder = model.sortParams.sortOrder==='asc' ? 'desc' : 'asc';
                 }else{
-                    sortParams.sortOrder = 'asc';
-                    currentSortColumn = sortParams.sortColumn;
+                    model.sortParams.sortOrder = 'asc';
+                    currentSortColumn = model.sortParams.sortColumn;
                 }
                 params.resetAndReload(true);
             };
@@ -131,7 +178,7 @@
                 ngTableResetAndReload();
             };
             params.resetSorting = function(reload){
-                sortParams = {sortColumn:null,sortOrder:null};
+                model.sortParams = {sortColumn:null,sortOrder:null};
             };
             params.resetCachedResponse = function(){
                 cachedResponse = null;

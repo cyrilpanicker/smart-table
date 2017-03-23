@@ -14,5 +14,9 @@
     ],
     "paginate":true,
     "pagerSeriesCount": 4,
-    "count": 5
+    "count": 5,
+    "rowSelectable":true,
+    "paginationTitleTemplate":"Showing {FROM} to {TO} of {TOTAL}",
+    "noRecordsMessage":"No records to show.",
+    "loadingMessage":"Loading data."
 }

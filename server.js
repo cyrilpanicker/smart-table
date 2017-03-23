@@ -10,16 +10,31 @@ app.post('/api/users',(request,response) => {
     // setTimeout(function(){
         var startPage = request.body.startPage;
         var endPage = request.body.endPage;
-        if(startPage===1 && endPage===4){
-            response.send(data[0]);
-        }else if(startPage===5 && endPage===8){
-            response.send(data[1]);
-        }else if(startPage===9 && endPage===12){
-            response.send(data[2]);
-        }else if(startPage===13 && endPage===13){
-            response.send(data[3]);
+        if(!startPage && !endPage){
+            response.send({
+                resultSet:data[0].resultSet.concat(data[1].resultSet),
+                totalItems:40
+            });
+            // response.send({
+            //     "resultSet":[],
+            //     "totalItems":0
+            // });
         }else{
-            console.log(startPage,endPage);
+            if(startPage===1 && endPage===4){
+                response.send(data[0]);
+            }else if(startPage===5 && endPage===8){
+                response.send(data[1]);
+            }else if(startPage===9 && endPage===12){
+                response.send(data[2]);
+            }else if(startPage===13 && endPage===13){
+                response.send(data[3]);
+            }else{
+                console.log(startPage,endPage);
+            }
+            // response.send({
+            //     "resultSet":[],
+            //     "totalItems":0
+            // });
         }
     // },1000);
 });

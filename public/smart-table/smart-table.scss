@@ -50,6 +50,10 @@
                     margin-top: auto;
                 }
             }
+            &.row-select{
+                width: 50px;
+                text-align: center;
+            }
         }
         tbody{
             tr{
@@ -57,15 +61,20 @@
                 &:nth-child(2n){
                     background-color: #F7F7F7;
                 }
+                &.no-records, &.loading-message{
+                    background-color: #FFF;
+                }
             }
             td{
                 padding: 8px;
                 line-height: 1.42857143;
                 border:1px solid #C6C6C6;
-                border-bottom: 0px;
+                &.row-select{
+                    text-align: center;
+                }
             }
         }
-    }   
+    }
     nav{
         background-color: #F5F5F5;
         padding: 0.5em;
@@ -114,5 +123,11 @@
                 cursor: not-allowed;
             }
         }
+    }
+    .top-pagination nav{
+        border-bottom: none;
+    }
+    .bottom-pagination nav{
+        border-top: none;
     }
 }

@@ -61,6 +61,11 @@
   margin-top: auto;
 }
 
+.smart-table table th.row-select {
+  width: 50px;
+  text-align: center;
+}
+
 .smart-table table tbody tr {
   background-color: #FFF;
 }
@@ -69,11 +74,18 @@
   background-color: #F7F7F7;
 }
 
+.smart-table table tbody tr.no-records, .smart-table table tbody tr.loading-message {
+  background-color: #FFF;
+}
+
 .smart-table table tbody td {
   padding: 8px;
   line-height: 1.42857143;
   border: 1px solid #C6C6C6;
-  border-bottom: 0px;
+}
+
+.smart-table table tbody td.row-select {
+  text-align: center;
 }
 
 .smart-table nav {
@@ -131,4 +143,12 @@
 
 .smart-table nav li.disabled a {
   cursor: not-allowed;
+}
+
+.smart-table .top-pagination nav {
+  border-bottom: none;
+}
+
+.smart-table .bottom-pagination nav {
+  border-top: none;
 }

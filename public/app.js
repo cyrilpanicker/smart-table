@@ -5,6 +5,7 @@ angular.module('app',['smartTable'])
 	$scope.usersTable = null;
 	$scope.searchParams = {id:null,name:null};
 	$scope.searchModel = {id:null,name:null};
+	$scope.selectedRows = [];
 	var intervalPromise = null;
 
 	$http({
@@ -23,6 +24,10 @@ angular.module('app',['smartTable'])
 		$scope.searchModel = {id:null,name:null};
 		$scope.searchParams = {id:null,name:null};
 		$scope.usersTable.resetAndReload();
+	};
+
+	$scope.onRowSelect = function(rows){
+		$scope.selectedRows = rows;
 	};
 
 	$scope.onUsersDataFetchStart = function(){
