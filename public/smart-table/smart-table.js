@@ -8,10 +8,11 @@
             replace:true,
             scope:true,
             templateUrl:'smart-table/smart-table.html',
-            controller:['$scope','$attrs',function($scope,$attrs){
+            controller:['$scope','$attrs','$element',function($scope,$attrs,$element){
                 var params = null;
                 var model = $scope.smartTableModel = {};
                 var currentData = null;
+                var selectAllCheckBox = $element.find('#selectAllCheckBox')[0];
                 model.dataFetchStartCallbackString = $attrs.onFetchStart;
                 model.dataFetchEndCallbackString = $attrs.onFetchEnd;
                 model.rowSelectCallbackString = $attrs.onRowSelect;
@@ -35,11 +36,13 @@
                     params.page(pagenumber);
                 };
                 model.resetSelectedRows = function(){
+                    if(!currentData)return;
                     currentData.forEach(function(datum){
                         datum._isSelected = false;
                     });
                 };
                 model.selectAllRows = function(){
+                    if(!currentData)return;
                     currentData.forEach(function(datum){
                         datum._isSelected = true;
                     });
@@ -53,19 +56,26 @@
                     model.updateSelectedRows();
                 };
                 model.updateSelectedRows = function(){
+                    if(!currentData)return;
                     var selectedRows = currentData.filter(function(datum){return datum._isSelected;});
                     if(selectedRows.length === currentData.length){
+                        angular.element(selectAllCheckBox).prop('indeterminate',false);
                         model.allRowsSelected = true;
                     }else{
+                        if(selectedRows.length!==0){
+                            angular.element(selectAllCheckBox).prop('indeterminate',true);
+                        }else{
+                            angular.element(selectAllCheckBox).prop('indeterminate',false);
+                        }
                         model.allRowsSelected = false;
                     }
                     var rowSelectCallback = $scope.$eval(model.rowSelectCallbackString);
                     if(rowSelectCallback && typeof rowSelectCallback === 'function'){
-                        if(!currentData){
-                            rowSelectCallback(null);
-                        }else{
-                            rowSelectCallback(selectedRows);
-                        }
+                        rowSelectCallback(selectedRows.map(function(_row){
+                            var row = angular.copy(_row);
+                            delete row._isSelected;
+                            return row;
+                        }));
                     }
                 };
                 $scope.$watch($attrs.smartTable,function(_params){
@@ -88,12 +98,12 @@
 					   .replace('{FROM}', from)
 					   .replace('{TO}', to)
 					   .replace('{TOTAL}', params.total());
-                    currentData = event.targetScope.$data;
-                    if(currentData){
+                    if(params.$params.rowSelectable){
+                        currentData = event.targetScope.$data;
                         model.resetSelectedRows();
+                        model.updateSelectedRows();
+                        model.allRowsSelected = false;
                     }
-                    model.updateSelectedRows();
-                    model.allRowsSelected = false;
    	            });
             }]
         };
