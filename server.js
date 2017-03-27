@@ -39,8 +39,11 @@ app.post('/api/users',(request,response) => {
     // },1000);
 });
 
-app.listen(8080,function(){
-    console.log('listening at port 8080');
+
+var ipaddress = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
+var port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+app.listen(port, ipaddress, function() {
+    console.log('listening at : http://'+ipaddress+':'+port);
 });
 
 
