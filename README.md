@@ -1,3 +1,5 @@
+***View demo here :*** [http://smarttable-cyrilpanicker.rhcloud.com/](http://smarttable-cyrilpanicker.rhcloud.com/)
+
 ***Files to include :***
 ```html
 <link rel="stylesheet" href="/smart-table/smart-table.css" />
