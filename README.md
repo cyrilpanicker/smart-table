@@ -1,9 +1,4 @@
-- run `npm install` to install dependencies.
-- run `npm start` to run the demo application.
-
-***example :***
-
-*Files to include :*
+***Files to include :***
 ```html
 <link rel="stylesheet" href="/smart-table/smart-table.css" />
 <script src="/libs/jquery.min.js"></script>
@@ -11,7 +6,7 @@
 <script src="/libs/ng-table.js"></script>
 <script src="/smart-table/smart-table.js"></script>
 ```
-*JavaScript :*
+***JavaScript :***
 ```javascript
 var metadata = {
     "apiUrl":"/api/users",
@@ -35,10 +30,13 @@ angular.module('app',['smartTable'])
     $scope.onUsersDataFetchEnd = function(){console.log('fetch-data-end');};
 }]);
 ```
-*HTML :*
+***HTML :***
 ```html
 <div smart-table="usersTable" request-params="searchParams" on-row-select="onRowSelect"
     on-fetch-start="onUsersDataFetchStart" on-fetch-end="onUsersDataFetchEnd"></div>
     
 <button ng-click="usersTable.resetAndReload()">Reload</button>
 ```
+***NPM Scripts for the demo application on GitHub :***
+- run `npm install` to install dependencies.
+- run `npm start` to run the demo application.
