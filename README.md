@@ -5,11 +5,11 @@
 
 *Files to include :*
 ```html
-        <link rel="stylesheet" href="/smart-table/smart-table.css" />
-        <script src="/libs/jquery.min.js"></script>
-        <script src="/libs/angular.min.js"></script>
-        <script src="/libs/ng-table.js"></script>
-        <script src="/smart-table/smart-table.js"></script>
+<link rel="stylesheet" href="/smart-table/smart-table.css" />
+<script src="/libs/jquery.min.js"></script>
+<script src="/libs/angular.min.js"></script>
+<script src="/libs/ng-table.js"></script>
+<script src="/smart-table/smart-table.js"></script>
 ```
 *JavaScript :*
 ```javascript
