@@ -1,5 +1,7 @@
 ***View demo here :*** [http://smarttable-cyrilpanicker.rhcloud.com/](http://smarttable-cyrilpanicker.rhcloud.com/)
 
+<a href="http://smarttable-cyrilpanicker.rhcloud.com/" target="_blank">http://smarttable-cyrilpanicker.rhcloud.com/</a>
+
 ***Files to include :***
 ```html
 <link rel="stylesheet" href="/smart-table/smart-table.css" />
