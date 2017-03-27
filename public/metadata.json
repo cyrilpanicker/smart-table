@@ -4,12 +4,14 @@
         {
             "title":"ID",
             "field": "id",
-            "sortable":true
+            "sortable":true,
+            "defaultSortOrder":null
         },
         {
             "title": "Name",
             "field": "name",
-            "sortable":true
+            "sortable":true,
+            "defaultSortOrder":"desc"
         }
     ],
     "paginate":true,

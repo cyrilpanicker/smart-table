@@ -17,7 +17,7 @@
                 model.dataFetchEndCallbackString = $attrs.onFetchEnd;
                 model.rowSelectCallbackString = $attrs.onRowSelect;
                 model.requestParamsString = $attrs.requestParams;
-                model.selectedRowsObjectString = $attrs.selectedRows;
+                model.currentSortColumn = null;
                 model.sortParams = {sortColumn:null,sortOrder:null};
                 model.selectedRows = [];
                 model.selectPage = function (page) {
@@ -35,13 +35,13 @@
                     var pagenumber = params.page() + 1;
                     params.page(pagenumber);
                 };
-                model.resetSelectedRows = function(){
+                var resetSelectedRows = function(){
                     if(!currentData)return;
                     currentData.forEach(function(datum){
                         datum._isSelected = false;
                     });
                 };
-                model.selectAllRows = function(){
+                var selectAllRows = function(){
                     if(!currentData)return;
                     currentData.forEach(function(datum){
                         datum._isSelected = true;
@@ -49,9 +49,9 @@
                 };
                 model.onSelectAllClick = function(event){
                     if(event.target.checked){
-                        model.selectAllRows();
+                        selectAllRows();
                     }else{
-                        model.resetSelectedRows();
+                        resetSelectedRows();
                     }
                     model.updateSelectedRows();
                 };
@@ -84,6 +84,16 @@
                     model.paginationTitleTemplate = _params.$params.paginationTitleTemplate || 'Showing {FROM} to {TO} of {TOTAL}';
                     model.noRecordsMessage = _params.$params.noRecordsMessage || 'No records to show.';
                     model.loadingMessage = _params.$params.loadingMessage || 'Loading data';
+                    model.defaultSortParams = {sortColumn:null,sortOrder:null};
+                    for(var i=0;i<_params.$params.columns.length;i++){
+                        if(_params.$params.columns[i].defaultSortOrder){
+                            model.currentSortColumn = _params.$params.columns[i].field;
+                            model.defaultSortParams.sortColumn = _params.$params.columns[i].field;
+                            model.defaultSortParams.sortOrder = _params.$params.columns[i].defaultSortOrder;
+                            model.sortParams = angular.copy(model.defaultSortParams);
+                            break;
+                        }
+                    }
                 });
    	            $scope.$on('ngTableAfterReloadData', function(event){
                     if(!params)return;
@@ -100,9 +110,8 @@
 					   .replace('{TOTAL}', params.total());
                     if(params.$params.rowSelectable){
                         currentData = event.targetScope.$data;
-                        model.resetSelectedRows();
+                        resetSelectedRows();
                         model.updateSelectedRows();
-                        model.allRowsSelected = false;
                     }
    	            });
             }]
@@ -113,7 +122,6 @@
         return function(parameters,settings){
             var params = null;
             var cachedResponse = null;
-            var currentSortColumn = null;
             var _scope = null;
             var model = null;
             var ngTableResetAndReload = null;
@@ -165,11 +173,11 @@
             };
             var serverSortBy = function(column){
                 model.sortParams.sortColumn = column;
-                if(model.sortParams.sortColumn === currentSortColumn){
+                if(model.sortParams.sortColumn === model.currentSortColumn){
                     model.sortParams.sortOrder = model.sortParams.sortOrder==='asc' ? 'desc' : 'asc';
                 }else{
                     model.sortParams.sortOrder = 'asc';
-                    currentSortColumn = model.sortParams.sortColumn;
+                    model.currentSortColumn = model.sortParams.sortColumn;
                 }
                 params.resetAndReload(true);
             };
@@ -188,7 +196,7 @@
                 ngTableResetAndReload();
             };
             params.resetSorting = function(reload){
-                model.sortParams = {sortColumn:null,sortOrder:null};
+                model.sortParams = angular.copy(model.defaultSortParams);
             };
             params.resetCachedResponse = function(){
                 cachedResponse = null;
