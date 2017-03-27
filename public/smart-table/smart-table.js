@@ -203,7 +203,12 @@
             };
             return params;
         };
-    }]);
+    }])
+
+    .run(['$templateCache',function($templateCache){
+        $templateCache.put('smart-table/smart-table-pagination.html','<nav ng-init="params=ngTableParamsObject;model=smartTableModel"> <p ng-show="params.total()">{{model.paginationTitle}}</p><ul ng-show="params.total()"> <li class="previous" ng-class="{\'disabled\': params.page()===1}"> <a href="" ng-click="model.previous(params.page()===1)"> <span>« PREV</span> </a> </li><li ng-class="{\'selected\': params.page()==page.number}" ng-repeat="page in model.pages"> <a href="" ng-click="model.selectPage(page)"> <span ng-bind="page.number"></span> </a> </li><li class="next" ng-class="{\'disabled\': params.page()===model.numPages}"> <a href="" ng-click="model.next(params.page()===model.numPages)"> <span>NEXT »</span> </a> </li></ul></nav>');
+        $templateCache.put('smart-table/smart-table.html','<div class="smart-table" ng-init="model=smartTableModel"> <div class="top-pagination" ng-if="ngTableParamsObject.$params.paginate" ng-include="\'smart-table/smart-table-pagination.html\'" > </div><table ng-table="ngTableParamsObject"> <thead> <tr> <th class="row-select" ng-show="params.$params.rowSelectable"> <input id="selectAllCheckBox" type="checkbox" ng-checked="model.allRowsSelected" ng-click="model.onSelectAllClick($event)"/> </th> <th ng-repeat="col in params.$params.columns" ng-click="col.sortable && params.serverSortBy(col.field)" ng-class="{\'sortable\':col.sortable, \'sort-asc\':model.sortParams.sortColumn===col.field && model.sortParams.sortOrder===\'asc\', \'sort-desc\':model.sortParams.sortColumn===col.field && model.sortParams.sortOrder===\'desc\'}" > <div ng-bind="col.title"></div></th> </tr></thead> <tbody> <tr ng-repeat="datum in $data" ng-show="!model.loading && $data.length"> <td class="row-select" ng-show="params.$params.rowSelectable"> <input type="checkbox" ng-model="datum._isSelected" ng-click="model.updateSelectedRows()"/> </td><td ng-repeat="col in params.$params.columns" ng-bind="datum[col.field]" > </td></tr><tr class="no-records" ng-show="!model.loading && !$data.length"> <td colspan="{{params.$params.columns.length + params.$params.rowSelectable}}" ng-bind="model.noRecordsMessage" > </td></tr><tr class="loading-message" ng-show="model.loading"> <td colspan="{{params.$params.columns.length + params.$params.rowSelectable}}" ng-bind="model.loadingMessage" > </td></tr></tbody> </table> <div class="bottom-pagination" ng-if="ngTableParamsObject.$params.paginate" ng-include="\'smart-table/smart-table-pagination.html\'" > </div></div>');
+    }]);	
 
 })(angular);
 
