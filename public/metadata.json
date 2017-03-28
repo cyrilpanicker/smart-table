@@ -5,19 +5,22 @@
             "title":"ID",
             "field": "id",
             "sortable":true,
-            "defaultSortOrder":null
+            "defaultSortOrder":null,
+            "width":15
         },
         {
             "title": "Name",
             "field": "name",
             "sortable":true,
-            "defaultSortOrder":"desc"
+            "defaultSortOrder":"desc",
+            "width":80
         }
     ],
     "paginate":true,
     "pagerSeriesCount": 4,
     "count": 5,
     "rowSelectable":true,
+    "rowSelectorColumnWidth":5,
     "paginationTitleTemplate":"Showing {FROM} to {TO} of {TOTAL}",
     "noRecordsMessage":"No records to show.",
     "loadingMessage":"Loading data."

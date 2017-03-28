@@ -6,7 +6,7 @@
     <table ng-table="ngTableParamsObject">
         <thead>
             <tr>
-                <th class="row-select" ng-show="params.$params.rowSelectable">
+                <th class="row-select" ng-show="params.$params.rowSelectable" ng-style="{'width':params.$params.rowSelectorColumnWidth+'%'}">
                     <input id="selectAllCheckBox" type="checkbox" ng-checked="model.allRowsSelected" ng-click="model.onSelectAllClick($event)" />
                 </th>
                 <th ng-repeat="col in params.$params.columns"
@@ -16,6 +16,7 @@
                         'sort-asc':model.sortParams.sortColumn===col.field && model.sortParams.sortOrder==='asc',
                         'sort-desc':model.sortParams.sortColumn===col.field && model.sortParams.sortOrder==='desc'
                     }"
+                    ng-style="{'width':col.width+'%'}"
                 >
                     <div ng-bind="col.title"></div>
                 </th>
