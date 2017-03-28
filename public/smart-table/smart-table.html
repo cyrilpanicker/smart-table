@@ -48,13 +48,13 @@
                 </td>
             </tr>
             <tr class="no-records" ng-show="!model.loading && !$data.length">
-                <td colspan="{{params.$params.columns.length + params.$params.rowSelectable}}"
+                <td colspan="{{params.$params.columns.length + params.$params.rowSelectable + !!params.$params.infoColumns.length}}"
                     ng-bind="model.noRecordsMessage"
                 >
                 </td>
             </tr>
             <tr class="loading-message" ng-show="model.loading">
-                <td colspan="{{params.$params.columns.length + params.$params.rowSelectable}}"
+                <td colspan="{{params.$params.columns.length + params.$params.rowSelectable + !!params.$params.infoColumns.length}}"
                     ng-bind="model.loadingMessage"
                 >
                 </td>
