@@ -20,6 +20,9 @@
                 >
                     <div ng-bind="col.title"></div>
                 </th>
+                <th ng-show="params.$params.infoColumns.length"
+                    ng-style="{'width':params.$params.infoColumnWidth+'%'}">
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -30,6 +33,18 @@
                 <td ng-repeat="col in params.$params.columns"
                     ng-bind="datum[col.field]"
                 >
+                </td>
+                <td class="info-column" ng-show="params.$params.infoColumns.length">
+                    <div smart-table-tooltip-wrapper class="tooltip-wrapper left">
+                        <a href="" class="info-icon"></a>
+                        <div class="tooltip-container">
+                            <div class="tooltip-content">
+                                <span ng-repeat="col in params.$params.infoColumns">
+                                    <span class="title" ng-bind="col.title"></span> : <span ng-bind="datum[col.field]"></span><br/>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                 </td>
             </tr>
             <tr class="no-records" ng-show="!model.loading && !$data.length">

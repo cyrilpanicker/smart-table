@@ -13,9 +13,20 @@
             "field": "name",
             "sortable":true,
             "defaultSortOrder":"desc",
-            "width":80
+            "width":75
         }
     ],
+    "infoColumns":[
+        {
+            "title": "Info1",
+            "field": "info1"
+        },
+        {
+            "title": "Info2",
+            "field": "info2"
+        }
+    ],
+    "infoColumnWidth":5,
     "paginate":true,
     "pagerSeriesCount": 4,
     "count": 5,
