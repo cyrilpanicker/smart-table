@@ -12,12 +12,20 @@
 ```javascript
 var metadata = {
     "apiUrl":"/api/users",
-    "columns":[{"title":"ID","field": "id","sortable":true,"defaultSortOrder":null},
-        {"title": "Name","field": "name","sortable":true,"defaultSortOrder":"desc"}],
+    "columns":[
+        {"title":"ID","field": "id","sortable":true,"defaultSortOrder":null,"width":15},
+        {"title": "Name","field": "name","sortable":true,"defaultSortOrder":"desc","width":75}
+    ],
+    "infoColumns":[
+        {"title": "Info1","field": "info1"},
+        {"title": "Info2","field": "info2"}
+    ],
+    "infoColumnWidth":5,
     "paginate":true,
     "pagerSeriesCount": 4,
     "count": 5,
     "rowSelectable":true,
+    "rowSelectorColumnWidth":5,
     "paginationTitleTemplate":"Showing {FROM} to {TO} of {TOTAL}",
     "noRecordsMessage":"No records to show.",
     "loadingMessage":"Loading data."
