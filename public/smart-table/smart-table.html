@@ -20,11 +20,11 @@
                 >
                     <div ng-bind="col.title"></div>
                 </th>
-                <th ng-repeat="col in params.$params.actionColumns" ng-style="{'width':col.width+'%'}">
-                     <div ng-bind="col.title"></div>
-                </th>
                 <th ng-show="params.$params.infoColumns.length"
                     ng-style="{'width':params.$params.infoColumnWidth+'%'}">
+                </th>
+                <th ng-repeat="col in params.$params.actionColumns" ng-style="{'width':col.width+'%'}">
+                     <div ng-bind="col.title"></div>
                 </th>
             </tr>
         </thead>
@@ -36,12 +36,6 @@
                 <td ng-repeat="col in params.$params.columns"
                     ng-bind="!datum[col.field] ? ((datum[col.field]===0||datum[col.field]===false) ? datum[col.field] : col.defaultText) : datum[col.field]"
                 >
-                </td>
-                <td class="action-column" ng-repeat="col in params.$params.actionColumns">
-                    <a ng-repeat="action in col.actions" ng-class="{'image-link':action.imageUrl}" href="" ng-click="model.onAction(action.id,datum)">
-                        <span ng-show="!action.imageUrl" ng-bind="action.text"></span>
-                        <img ng-show="action.imageUrl" ng-src="{{action.imageUrl}}" ng-attr-title="{{action.text}}" />
-                    </a>
                 </td>
                 <td class="info-column" ng-show="params.$params.infoColumns.length">
                     <div smart-table-tooltip-wrapper class="tooltip-wrapper left">
@@ -56,6 +50,12 @@
                             </div>
                         </div>
                     </div>
+                </td>
+                <td class="action-column" ng-repeat="col in params.$params.actionColumns">
+                    <a ng-repeat="action in col.actions" ng-class="{'image-link':action.imageUrl}" href="" ng-click="model.onAction(action.id,datum)">
+                        <span ng-show="!action.imageUrl" ng-bind="action.text"></span>
+                        <img ng-show="action.imageUrl" ng-src="{{action.imageUrl}}" ng-attr-title="{{action.text}}" />
+                    </a>
                 </td>
             </tr>
             <tr class="no-records" ng-show="!model.loading && !$data.length">
