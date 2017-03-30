@@ -14,7 +14,6 @@
             "field": "name",
             "sortable":true,
             "defaultSortOrder":"desc",
-            "width":65,
             "defaultText":"--"
         },
         {
@@ -36,6 +35,40 @@
             "title": "Info2",
             "field": "info2",
             "defaultText":"Not Applicable"
+        }
+    ],
+    "actionColumns":[
+        {
+            "title":"Actions1",
+            "width":13,
+            "actions":[
+                {
+                    "id":1,
+                    "text":"Process1",
+                    "imageUrl":null
+                },
+                {
+                    "id":2,
+                    "text":"Process2",
+                    "imageUrl":null
+                }
+            ]
+        },
+        {
+            "title":"Actions2",
+            "width":6,
+            "actions":[
+                {
+                    "id":3,
+                    "text":"Process3",
+                    "imageUrl":"/images/edit-icon.png"
+                },
+                {
+                    "id":4,
+                    "text":"Process4",
+                    "imageUrl":"/images/delete-icon.png"
+                }
+            ]
         }
     ],
     "infoColumnWidth":5,

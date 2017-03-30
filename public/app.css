@@ -9,3 +9,9 @@ body{
 .smart-table{
     margin:30px;
 }
+
+.message,.selected-rows{
+    height: 20px;
+    text-align: center;
+    font-weight: bold;
+}

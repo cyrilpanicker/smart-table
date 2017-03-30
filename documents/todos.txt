@@ -1,1 +1,2 @@
-clearCachedData api
+- when there is no data, and when selectall is clicked,
+    if search is clicked, selectall is not removed.

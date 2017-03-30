@@ -71,6 +71,14 @@
                 &.row-select, &.info-column{
                     text-align: center;
                 }
+                &.action-column a{
+                    margin-left: 5px;
+                    margin-right: 5px;
+                    &.image-link{
+                        text-decoration: none;
+                        vertical-align: sub;
+                    }
+                }
             }
         }
     }

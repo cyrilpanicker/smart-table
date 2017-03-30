@@ -1,12 +1,11 @@
 angular.module('app',['smartTable'])
 
-.controller('MainController',['$scope','$http','SmartTableParams','$interval', function($scope,$http,SmartTableParams,$interval){
+.controller('MainController',['$scope','$http','SmartTableParams','$timeout', function($scope,$http,SmartTableParams,$timeout){
 
 	$scope.usersTable = null;
 	$scope.searchParams = {id:null,name:null};
 	$scope.searchModel = {id:null,name:null};
 	$scope.selectedRows = [];
-	var intervalPromise = null;
 
 	$http({
 		method:'GET',
@@ -27,7 +26,7 @@ angular.module('app',['smartTable'])
 	};
 
 	$scope.onRowSelect = function(rows){
-		$scope.selectedRows = rows;
+		$scope.selectedRows = rows.map(function(row){return row.id;});
 	};
 
 	$scope.onUsersDataFetchStart = function(){
@@ -36,6 +35,13 @@ angular.module('app',['smartTable'])
 
 	$scope.onUsersDataFetchEnd = function(){
 		console.log('end');
+	};
+
+	$scope.onUserAction = function(actionId,user){
+		$scope.message = 'Process-'+actionId+' selected for user with ID '+user.id;
+		$timeout(function(){
+			$scope.message = null;
+		},2000);
 	};
 
 }]);
