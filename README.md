@@ -55,7 +55,7 @@ angular.module('app',['smartTable'])
     $scope.usersTable = new SmartTableParams(metadata);
     $scope.searchParams = {param1:'value1'};
     $scope.onRowSelect = function(rows){$scope.selectedRows = rows;};
-	$scope.onUserAction = function(actionId,user){$scope.message = 'Process-'+actionId+' selected for user with ID '+user.id;};
+    $scope.onUserAction = function(actionId,user){$scope.message = 'Process-'+actionId+' selected for user with ID '+user.id;};
     $scope.onUsersDataFetchStart = function(){console.log('fetch-data-start');};
     $scope.onUsersDataFetchEnd = function(){console.log('fetch-data-end');};
 }]);
