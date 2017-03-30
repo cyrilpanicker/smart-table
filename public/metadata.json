@@ -6,24 +6,36 @@
             "field": "id",
             "sortable":true,
             "defaultSortOrder":null,
-            "width":15
+            "width":15,
+            "defaultText":"--"
         },
         {
             "title": "Name",
             "field": "name",
             "sortable":true,
             "defaultSortOrder":"desc",
-            "width":75
+            "width":65,
+            "defaultText":"--"
+        },
+        {
+            "title": "Skill",
+            "field": "skill",
+            "sortable":false,
+            "defaultSortOrder":null,
+            "width":10,
+            "defaultText":"NA"
         }
     ],
     "infoColumns":[
         {
             "title": "Info1",
-            "field": "info1"
+            "field": "info1",
+            "defaultText":"--"
         },
         {
             "title": "Info2",
-            "field": "info2"
+            "field": "info2",
+            "defaultText":"Not Applicable"
         }
     ],
     "infoColumnWidth":5,

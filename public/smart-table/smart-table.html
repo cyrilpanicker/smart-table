@@ -31,7 +31,7 @@
                     <input type="checkbox" ng-model="datum._isSelected" ng-click="model.updateSelectedRows()" />
                 </td>
                 <td ng-repeat="col in params.$params.columns"
-                    ng-bind="datum[col.field]"
+                    ng-bind="!datum[col.field] ? ((datum[col.field]===0||datum[col.field]===false) ? datum[col.field] : col.defaultText) : datum[col.field]"
                 >
                 </td>
                 <td class="info-column" ng-show="params.$params.infoColumns.length">
@@ -40,7 +40,9 @@
                         <div class="tooltip-container">
                             <div class="tooltip-content">
                                 <span ng-repeat="col in params.$params.infoColumns">
-                                    <span class="title" ng-bind="col.title"></span> : <span ng-bind="datum[col.field]"></span><br/>
+                                    <span class="title" ng-bind="col.title"></span> :
+                                    <span ng-bind="!datum[col.field] ? ((datum[col.field]===0||datum[col.field]===false) ? datum[col.field] : col.defaultText) : datum[col.field]"></span>
+                                    <br/>
                                 </span>
                             </div>
                         </div>
