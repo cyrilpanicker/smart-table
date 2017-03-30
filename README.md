@@ -8,7 +8,7 @@
 <script src="/libs/ng-table.js"></script>
 <script src="/smart-table/smart-table.js"></script>
 ```
-***JavaScript :***
+***MetaData***
 ```javascript
 var metadata = {
     "apiUrl":"/api/users",
@@ -47,7 +47,9 @@ var metadata = {
     "noRecordsMessage":"No records to show.",
     "loadingMessage":"Loading data."
 };
-
+```
+***JavaScript :***
+```javascript
 angular.module('app',['smartTable'])
 .controller('MainController',['$scope','SmartTableParams', function($scope,SmartTableParams){
     $scope.usersTable = new SmartTableParams(metadata);
