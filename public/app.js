@@ -6,6 +6,8 @@ angular.module('app',['smartTable'])
 	$scope.searchParams = {id:null,name:null};
 	$scope.searchModel = {id:null,name:null};
 	$scope.selectedRows = [];
+	$scope.message = '';
+	var timeoutPromise;
 
 	$http({
 		method:'GET',
@@ -38,9 +40,13 @@ angular.module('app',['smartTable'])
 	};
 
 	$scope.onUserAction = function(actionId,user){
-		$scope.message = 'Process-'+actionId+' selected for user with ID '+user.id;
-		$timeout(function(){
-			$scope.message = null;
+		$timeout.cancel(timeoutPromise);
+		if($scope.message){
+			$scope.message += ', ';
+		}
+		$scope.message += 'Process-'+actionId+' : User-'+user.id;
+		timeoutPromise = $timeout(function(){
+			$scope.message = '';
 		},2000);
 	};
 

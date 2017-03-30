@@ -77,7 +77,7 @@
     "count": 5,
     "rowSelectable":true,
     "rowSelectorColumnWidth":5,
-    "paginationTitleTemplate":"Showing {FROM} to {TO} of {TOTAL}",
+    "paginationTitleTemplate":"Showing {FROM} to {TO} of {TOTAL} Users",
     "noRecordsMessage":"No records to show.",
     "loadingMessage":"Loading data."
 }
