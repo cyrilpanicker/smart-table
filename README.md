@@ -62,8 +62,13 @@ angular.module('app',['smartTable'])
 ```
 ***HTML :***
 ```html
-<div smart-table="usersTable" on-action="onUserAction" request-params="searchParams" on-row-select="onRowSelect"
-    on-fetch-start="onUsersDataFetchStart" on-fetch-end="onUsersDataFetchEnd"></div>
+<div smart-table="usersTable"
+    request-params="searchParams"
+    on-action="onUserAction"
+    on-row-select="onRowSelect"
+    on-fetch-start="onUsersDataFetchStart"
+    on-fetch-end="onUsersDataFetchEnd">
+</div>
     
 <button ng-click="usersTable.resetAndReload()">Reload</button>
 ```
