@@ -8,7 +8,7 @@
 <script src="/libs/ng-table.js"></script>
 <script src="/smart-table/smart-table.js"></script>
 ```
-***MetaData***
+***MetaData :***
 ```javascript
 var metadata = {
     "apiUrl":"/api/users",
