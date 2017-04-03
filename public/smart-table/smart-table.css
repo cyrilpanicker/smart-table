@@ -83,7 +83,7 @@
   border: 1px solid #C6C6C6;
 }
 
-.smart-table table tbody td.row-select, .smart-table table tbody td.info-column {
+.smart-table table tbody td.row-select, .smart-table table tbody td.info-columns-container {
   text-align: center;
 }
 
@@ -95,6 +95,24 @@
 .smart-table table tbody td.action-column a.image-link {
   text-decoration: none;
   vertical-align: sub;
+}
+
+.smart-table table tbody td .marker-container {
+  display: inline-block;
+}
+
+.smart-table table tbody td .marker-container .marker-group {
+  display: inline-block;
+  min-width: 20px;
+}
+
+.smart-table table tbody td img {
+  vertical-align: middle;
+}
+
+.smart-table table tbody td > div {
+  display: inline;
+  vertical-align: middle;
 }
 
 .smart-table nav {

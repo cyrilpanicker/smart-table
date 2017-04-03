@@ -6,41 +6,108 @@
             "field": "id",
             "sortable":true,
             "defaultSortOrder":null,
-            "width":15,
-            "defaultText":"--"
+            "width":7,
+            "left":30,
+            "defaultText":"--",
+            "markers":[
+                [
+                    {
+                        "imageUrl":"/images/mark-rush-icon.png",
+                        "property":"isRush"
+                    }
+                ],
+                [
+                    {
+                        "imageUrl":"/images/policy-icon.png",
+                        "property":"isPolicy"
+                    },
+                    {
+                        "imageUrl":"/images/top-nonpolicy-icon.png",
+                        "property":"isNonPolicy"
+                    },
+                    {
+                        "imageUrl":"/images/others-icon.png",
+                        "property":"isOthers"
+                    }
+                ]
+            ],
+            "infoColumns":[],
+            "actions":[
+                {
+                    "id":0,
+                    "text":null,
+                    "imageUrl":null
+                }
+            ]
         },
         {
             "title": "Name",
             "field": "name",
             "sortable":true,
             "defaultSortOrder":"desc",
-            "defaultText":"--"
+            "width":null,
+            "left":null,
+            "defaultText":"--",
+            "markers":[],
+            "infoColumns":[],
+            "actions":[]
         },
         {
             "title": "Skill",
             "field": "skill",
             "sortable":false,
             "defaultSortOrder":null,
-            "width":10,
-            "defaultText":"NA"
-        }
-    ],
-    "infoColumns":[
-        {
-            "title": "Info1",
-            "field": "info1",
-            "defaultText":"--"
+            "width":30,
+            "left":null,
+            "defaultText":"NA",
+            "markers":[
+                [
+                    {
+                        "imageUrl":"/images/dms-only.png",
+                        "property":"isDmsOnly"
+                    },
+                    {
+                        "imageUrl":"/images/epic-only.png",
+                        "property":"isEpicOnly"
+                    }
+                ]
+            ],
+            "infoColumns":[],
+            "actions":[]
         },
         {
-            "title": "Info2",
-            "field": "info2",
-            "defaultText":"Not Applicable"
-        }
-    ],
-    "actionColumns":[
+            "title": null,
+            "field": null,
+            "sortable":null,
+            "defaultSortOrder":null,
+            "width":5,
+            "left":null,
+            "defaultText":null,
+            "markers":[],
+            "infoColumns":[
+                {
+                    "title": "Info1",
+                    "field": "info1",
+                    "defaultText":"--"
+                },
+                {
+                    "title": "Info2",
+                    "field": "info2",
+                    "defaultText":"Not Applicable"
+                }
+            ],
+            "actions":[]
+        },
         {
             "title":"Actions1",
+            "field":null,
+            "sortable":false,
+            "defaultSortOrder":null,
             "width":13,
+            "left":null,
+            "defaultText":null,
+            "markers":[],
+            "infoColumns":[],
             "actions":[
                 {
                     "id":1,
@@ -56,7 +123,14 @@
         },
         {
             "title":"Actions2",
+            "field":null,
+            "sortable":false,
+            "defaultSortOrder":null,
             "width":7,
+            "left":null,
+            "defaultText":null,
+            "markers":[],
+            "infoColumns":[],
             "actions":[
                 {
                     "id":3,
@@ -71,7 +145,6 @@
             ]
         }
     ],
-    "infoColumnWidth":5,
     "paginate":true,
     "pagerSeriesCount": 4,
     "count": 5,

@@ -68,7 +68,7 @@
                 padding: 8px;
                 line-height: 1.42857143;
                 border:1px solid #C6C6C6;
-                &.row-select, &.info-column{
+                &.row-select, &.info-columns-container{
                     text-align: center;
                 }
                 &.action-column a{
@@ -78,6 +78,21 @@
                         text-decoration: none;
                         vertical-align: sub;
                     }
+                }
+                .marker-container{
+                    display: inline-block;
+                    .marker-group{
+                        display: inline-block;
+                        min-width: 20px;
+                    }
+                }
+
+                img{
+                    vertical-align: middle;
+                }
+                &>div{
+                    display: inline;
+                    vertical-align: middle;
                 }
             }
         }

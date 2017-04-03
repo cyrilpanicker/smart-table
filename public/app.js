@@ -7,6 +7,7 @@ angular.module('app',['smartTable'])
 	$scope.searchModel = {id:null,name:null};
 	$scope.selectedRows = [];
 	$scope.message = '';
+	$scope.loading = false;
 	var timeoutPromise;
 
 	$http({
@@ -32,10 +33,12 @@ angular.module('app',['smartTable'])
 	};
 
 	$scope.onUsersDataFetchStart = function(){
+		$scope.loading = true;
 		console.log('start');
 	};
 
 	$scope.onUsersDataFetchEnd = function(){
+		$scope.loading = false;
 		console.log('end');
 	};
 
@@ -44,7 +47,7 @@ angular.module('app',['smartTable'])
 		if($scope.message){
 			$scope.message += ', ';
 		}
-		$scope.message += 'Process-'+actionId+' : User-'+user.id;
+		$scope.message += 'Process-'+actionId+':User-'+user.id;
 		timeoutPromise = $timeout(function(){
 			$scope.message = '';
 		},2000);

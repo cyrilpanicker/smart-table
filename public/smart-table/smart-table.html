@@ -20,12 +20,6 @@
                 >
                     <div ng-bind="col.title"></div>
                 </th>
-                <th ng-show="params.$params.infoColumns.length"
-                    ng-style="{'width':params.$params.infoColumnWidth+'%'}">
-                </th>
-                <th ng-repeat="col in params.$params.actionColumns" ng-style="{'width':col.width+'%'}">
-                     <div ng-bind="col.title"></div>
-                </th>
             </tr>
         </thead>
         <tbody>
@@ -33,39 +27,44 @@
                 <td class="row-select" ng-show="params.$params.rowSelectable">
                     <input type="checkbox" ng-model="datum._isSelected" ng-click="model.updateSelectedRows()" />
                 </td>
-                <td ng-repeat="col in params.$params.columns"
-                    ng-bind="!datum[col.field] ? ((datum[col.field]===0||datum[col.field]===false) ? datum[col.field] : col.defaultText) : datum[col.field]"
-                >
-                </td>
-                <td class="info-column" ng-show="params.$params.infoColumns.length">
-                    <div smart-table-tooltip-wrapper class="tooltip-wrapper left">
+                <td ng-repeat="col in params.$params.columns" ng-class="{'info-columns-container':col.infoColumns.length,'action-column':col.actions.length}">
+                    <div class="marker-container">
+                        <div class="marker-group" ng-repeat="markerGroup in col.markers">
+                            <img  class="marker-image" ng-repeat="marker in markerGroup" ng-show="datum[marker.property]" ng-src="{{marker.imageUrl}}" />
+                        </div>
+                    </div>
+                    <div ng-show="col.infoColumns.length" smart-table-tooltip-wrapper class="tooltip-wrapper left">
                         <a href="" class="info-icon"></a>
                         <div class="tooltip-container">
                             <div class="tooltip-content">
-                                <span ng-repeat="col in params.$params.infoColumns">
-                                    <span class="title" ng-bind="col.title"></span> :
-                                    <span ng-bind="!datum[col.field] ? ((datum[col.field]===0||datum[col.field]===false) ? datum[col.field] : col.defaultText) : datum[col.field]"></span>
+                                <span ng-repeat="innerCol in col.infoColumns">
+                                    <span class="title" ng-bind="innerCol.title"></span> :
+                                    <span ng-bind="!datum[innerCol.field] ? ((datum[innerCol.field]===0||datum[innerCol.field]===false) ? datum[innerCol.field] : innerCol.defaultText) : datum[innerCol.field]"></span>
                                     <br/>
                                 </span>
                             </div>
                         </div>
                     </div>
-                </td>
-                <td class="action-column" ng-repeat="col in params.$params.actionColumns">
-                    <a ng-repeat="action in col.actions" ng-class="{'image-link':action.imageUrl}" href="" ng-click="model.onAction(action.id,datum)">
-                        <span ng-show="!action.imageUrl" ng-bind="action.text"></span>
-                        <img ng-show="action.imageUrl" ng-src="{{action.imageUrl}}" ng-attr-title="{{action.text}}" />
-                    </a>
+                    <div ng-repeat="action in col.actions">
+                        <a  ng-class="{'image-link':action.imageUrl}" href="" ng-click="model.onAction(action.id,datum)">
+                            <span ng-show="!action.imageUrl" ng-bind="action.text || datum[col.field]"></span>
+                            <img ng-show="action.imageUrl" ng-src="{{action.imageUrl}}" ng-attr-title="{{action.text}}" />
+                        </a>
+                    </div>
+                    <div ng-show="!col.infoColumns.length && !col.actions.length"
+                        ng-bind="!datum[col.field] ? ((datum[col.field]===0||datum[col.field]===false) ? datum[col.field] : col.defaultText) : datum[col.field]">
+
+                    </div>
                 </td>
             </tr>
             <tr class="no-records" ng-show="!model.loading && !$data.length">
-                <td colspan="{{params.$params.columns.length + params.$params.actionColumns.length + params.$params.rowSelectable + !!params.$params.infoColumns.length}}"
+                <td colspan="{{params.$params.columns.length + params.$params.rowSelectable}}"
                     ng-bind="model.noRecordsMessage"
                 >
                 </td>
             </tr>
             <tr class="loading-message" ng-show="model.loading">
-                <td colspan="{{params.$params.columns.length + params.$params.actionColumns.length + params.$params.rowSelectable + !!params.$params.infoColumns.length}}"
+                <td colspan="{{params.$params.columns.length + params.$params.rowSelectable}}"
                     ng-bind="model.loadingMessage"
                 >
                 </td>
