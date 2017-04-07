@@ -1,0 +1,41 @@
+{
+    "apiUrl":"/api/demo",
+    "paginate":false,
+    "pagerSeriesCount": null,
+    "count": 1,
+    "rowSelectable":false,
+    "rowSelectorColumnWidth":null,
+    "paginationTitleTemplate":null,
+    "noRecordsMessage":null,
+    "loadingMessage":"Loading data.",
+    "columns":[
+        {
+            "title":"All possible content in a single table cell","field":"rowContent","sortable":false,
+            "defaultSortOrder":null,"width":null,"defaultText":null,"isFieldActionable":true,"infoTooltipPosition":"top",
+            "markers":[
+                [
+                    {"imageUrl":"/images/mark-rush-icon.png","property":"isRush"}
+                ],
+                [
+                    {"imageUrl":"/images/policy-icon.png","property":"isPolicy"},
+                    {"imageUrl":"/images/top-nonpolicy-icon.png","property":"isNonPolicy"},
+                    {"imageUrl":"/images/others-icon.png","property":"isOthers"}
+                ],
+                [
+                    {"imageUrl":"/images/dms-only.png","property":"isDmsOnly"},
+                    {"imageUrl":"/images/epic-only.png","property":"isEpicOnly"}
+                ]
+            ],
+            "infoColumns":[
+                {"title": "Info1","field": "info1","defaultText":"--"},
+                {"title": "Info2","field": "info2","defaultText":"--"}
+            ],
+            "actions":[
+                {"id":2,"text":"Process1","imageUrl":null},
+                {"id":4,"text":"Process2","imageUrl":null},
+                {"id":3,"text":"Process3","imageUrl":"/images/edit-icon.png"},
+                {"id":5,"text":"Process4","imageUrl":"/images/delete-icon.png"}
+            ]
+        }
+    ]
+}

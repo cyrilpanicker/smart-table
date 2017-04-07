@@ -39,6 +39,13 @@ app.post('/api/users',(request,response) => {
     // },1000);
 });
 
+app.post('/api/demo',function(request,response){
+    response.send({
+        resultSet:[{"id":1,"rowContent":"Row Content","info1":"Info---1","info2":"Info---2","isRush":true,"isPolicy":true,"isNonPolicy":false,"isOthers":false,"isDmsOnly":true,"isEpicOnly":false}],
+        totalItems:1
+    });
+});
+
 
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
 var port = process.env.OPENSHIFT_NODEJS_PORT || 8080;

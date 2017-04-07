@@ -27,13 +27,17 @@
                 <td class="row-select" ng-show="params.$params.rowSelectable">
                     <input type="checkbox" ng-model="datum._isSelected" ng-click="model.updateSelectedRows()" />
                 </td>
-                <td ng-repeat="col in params.$params.columns" ng-class="{'info-columns-container':col.infoColumns.length,'action-column':col.actions.length}">
+                <td ng-repeat="col in params.$params.columns">
                     <div class="marker-container">
                         <div class="marker-group" ng-repeat="markerGroup in col.markers">
-                            <img  class="marker-image" ng-repeat="marker in markerGroup" ng-show="datum[marker.property]" ng-src="{{marker.imageUrl}}" />
+                            <img class="marker-image" ng-repeat="marker in markerGroup" ng-show="datum[marker.property]" ng-src="{{marker.imageUrl}}" />
                         </div>
                     </div>
-                    <div ng-show="col.infoColumns.length" smart-table-tooltip-wrapper class="tooltip-wrapper left">
+                    <div class="field-container">
+                        <a href="" ng-show="col.isFieldActionable" ng-click="model.onAction(null,datum)" ng-bind="!datum[col.field] ? ((datum[col.field]===0||datum[col.field]===false) ? datum[col.field] : col.defaultText) : datum[col.field]"></a>
+                        <span ng-show="!col.isFieldActionable" ng-bind="!datum[col.field] ? ((datum[col.field]===0||datum[col.field]===false) ? datum[col.field] : col.defaultText) : datum[col.field]"></span>
+                    </div>
+                    <div ng-show="col.infoColumns.length" smart-table-tooltip-wrapper class="info-columns-container tooltip-wrapper {{col.infoTooltipPosition ? ' '+col.infoTooltipPosition : ' left'}}">
                         <a href="" class="info-icon"></a>
                         <div class="tooltip-container">
                             <div class="tooltip-content">
@@ -45,15 +49,11 @@
                             </div>
                         </div>
                     </div>
-                    <div ng-repeat="action in col.actions">
-                        <a  ng-class="{'image-link':action.imageUrl}" href="" ng-click="model.onAction(action.id,datum)">
-                            <span ng-show="!action.imageUrl" ng-bind="action.text || datum[col.field]"></span>
+                    <div class="actions-container">
+                        <a ng-repeat="action in col.actions"  ng-class="{'image-link':action.imageUrl}" href="" ng-click="model.onAction(action.id,datum)">
+                            <span ng-show="!action.imageUrl" ng-bind="action.text"></span>
                             <img ng-show="action.imageUrl" ng-src="{{action.imageUrl}}" ng-attr-title="{{action.text}}" />
                         </a>
-                    </div>
-                    <div ng-show="!col.infoColumns.length && !col.actions.length"
-                        ng-bind="!datum[col.field] ? ((datum[col.field]===0||datum[col.field]===false) ? datum[col.field] : col.defaultText) : datum[col.field]">
-
                     </div>
                 </td>
             </tr>

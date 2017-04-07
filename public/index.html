@@ -20,21 +20,23 @@
             <button ng-click="usersTable.resetAndReload(true)">Retain Sorting &amp; Reload Data</button>
             <button ng-click="onReset()">Reset Search &amp; Reload Data</button><br/><br/>
 
-            <div class="message" ng-bind="message"></div>
+            <div class="message">
+                <span ng-show="selectedRows.length">
+                    Selected rows: <span ng-bind="selectedRows"></span>
+                </span>
+                <span ng-show="loading">Fetching data..</span>
+                <span ng-bind="message"></span>
+            </div>
 
             <div smart-table="usersTable"
                 request-params="searchParams"
                 on-row-select="onRowSelect"
                 on-fetch-start="onUsersDataFetchStart"
                 on-fetch-end="onUsersDataFetchEnd"
-                on-action="onUserAction"
-            >
+                on-action="onUserAction">
             </div>
 
-            <div ng-show="selectedRows.length" class="selected-rows">
-                Selected rows: <span ng-bind="selectedRows"></span>
-            </div>
-            <div class="data-fetch-message" ng-show="loading">Fetching data..</div>
+            <div smart-table="demoTable"></div>
 
         </div>
     </body>

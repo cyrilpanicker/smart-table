@@ -10,7 +10,7 @@ body{
     margin:30px;
 }
 
-.message,.selected-rows,.data-fetch-message{
+.message{
     height: 20px;
     text-align: center;
     font-weight: bold;
