@@ -34,7 +34,8 @@ var metadata = {
                     {"imageUrl":"/images/others-icon.png","property":"isOthers"}
                 ]
             ],
-            "infoColumns":[]
+            "infoColumns":[],
+            "actions":[]
         },
         {
             "title": "Name","field": "name","sortable":true,"defaultSortOrder":"desc","width":7,
