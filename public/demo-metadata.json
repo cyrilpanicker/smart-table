@@ -12,6 +12,7 @@
         {
             "title":"All possible content in a single table cell","field":"rowContent","sortable":false,
             "defaultSortOrder":null,"width":null,"defaultText":null,"isFieldActionable":true,"infoTooltipPosition":"top",
+            "alignment":"center",
             "markers":[
                 [
                     {"imageUrl":"/images/mark-rush-icon.png","property":"isRush"}

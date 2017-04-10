@@ -27,7 +27,7 @@
                 <td class="row-select" ng-show="params.$params.rowSelectable">
                     <input type="checkbox" ng-model="datum._isSelected" ng-click="model.updateSelectedRows()" />
                 </td>
-                <td ng-repeat="col in params.$params.columns">
+                <td ng-repeat="col in params.$params.columns" ng-style="{'text-align':col.alignment?col.alignment:'left'}">
                     <div class="marker-container">
                         <div class="marker-group" ng-repeat="markerGroup in col.markers">
                             <img class="marker-image" ng-repeat="marker in markerGroup" ng-show="datum[marker.property]" ng-src="{{marker.imageUrl}}" />
