@@ -24,6 +24,7 @@ var metadata = {
         {
             "title":"ID","field": "id","sortable":true,"defaultSortOrder":null,"width":7,
             "defaultText":"--","isFieldActionable":true,"infoTooltipPosition":null,
+            "alignment":"right",
             "markers":[
                 [
                     {"imageUrl":"/images/mark-rush-icon.png","property":"isRush"}
@@ -40,6 +41,7 @@ var metadata = {
         {
             "title": "Name","field": "name","sortable":true,"defaultSortOrder":"desc","width":7,
             "defaultText":"--","isFieldActionable":false,"infoTooltipPosition":null,
+            "alignment":"right",
             "markers":[],
             "infoColumns":[],
             "actions":[]
@@ -47,6 +49,7 @@ var metadata = {
         {
             "title": "Skill","field": "skill","sortable":false,"defaultSortOrder":null,"width":null,
             "defaultText":"NA","isFieldActionable":false,"infoTooltipPosition":null,
+            "alignment":"center",
             "markers":[],
             "infoColumns":[],
             "actions":[]
@@ -54,6 +57,7 @@ var metadata = {
         {
             "title": null,"field": null,"sortable":null,"defaultSortOrder":null,"width":3,
             "defaultText":null,"isFieldActionable":false,"infoTooltipPosition":"top",
+            "alignment":"center",
             "markers":[],
             "infoColumns":[
                 {"title": "Info1","field": "info1","defaultText":"--"},
@@ -64,6 +68,7 @@ var metadata = {
         {
             "title":"Actions1","field":null,"sortable":false,"defaultSortOrder":null,"width":14,
             "defaultText":null,"isFieldActionable":false,"infoTooltipPosition":null,
+            "alignment":"center",
             "markers":[],
             "infoColumns":[],
             "actions":[
@@ -74,6 +79,7 @@ var metadata = {
         {
             "title":"Actions2","field":null,"sortable":false,"defaultSortOrder":null,"width":7,
             "defaultText":null,"isFieldActionable":false,"infoTooltipPosition":null,
+            "alignment":"center",
             "markers":[],
             "infoColumns":[],
             "actions":[
