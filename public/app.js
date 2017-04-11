@@ -12,14 +12,14 @@ angular.module('app',['smartTable'])
 
 	$http({
 		method:'GET',
-		url:'/metadata.json'
+		url:'metadata.json'
 	}).then(function(response){
 		$scope.usersTable = new SmartTableParams(response.data);
 	});
 
 	$http({
 		method:'GET',
-		url:'/demo-metadata.json'
+		url:'demo-metadata.json'
 	}).then(function(response){
 		$scope.demoTable = new SmartTableParams(response.data);
 	});

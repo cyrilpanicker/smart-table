@@ -4,9 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "compile:sass":"node-sass --output-style expanded public/smart-table/smart-table.scss public/smart-table/smart-table.css",
-    "watch:compile:sass":"npm run compile:sass && node-sass --watch --output-style expanded public/smart-table/smart-table.scss public/smart-table/smart-table.css",
-    "start": "node server.js"
+    "compile:sass": "node-sass --output-style expanded public/smart-table/smart-table.scss public/smart-table/smart-table.css",
+    "watch:compile:sass": "npm run compile:sass && node-sass --watch --output-style expanded public/smart-table/smart-table.scss public/smart-table/smart-table.css",
+    "start": "node smart-table-server.js"
   },
   "repository": {
     "type": "git",

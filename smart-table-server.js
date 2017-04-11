@@ -1,8 +1,14 @@
 var express = require('express');
-var bodyParser=require('body-parser');
+var bodyParser = require('body-parser');
 
 var app = express();
 app.use(bodyParser.json());
+
+if(process.env.NODE_ENV === 'production'){
+    app.get('/',function(request,response){
+        response.sendFile('public/prod-index.html',{root : __dirname});
+    });
+}
 
 app.use(express.static('./public'));
 
@@ -48,7 +54,7 @@ app.post('/api/demo',function(request,response){
 
 
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1";
-var port = process.env.OPENSHIFT_NODEJS_PORT || 8080;
+var port = process.env.OPENSHIFT_NODEJS_PORT || 9000;
 app.listen(port, ipaddress, function() {
     console.log('listening at : http://'+ipaddress+':'+port);
 });

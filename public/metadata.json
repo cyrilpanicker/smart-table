@@ -1,5 +1,5 @@
 {
-    "apiUrl":"/api/users",
+    "apiUrl":"api/users",
     "paginate":true,
     "pagerSeriesCount": 4,
     "count": 5,
@@ -15,12 +15,12 @@
             "alignment":"right","maxLength":null,
             "markers":[
                 [
-                    {"imageUrl":"/images/mark-rush-icon.png","field":"isRush"}
+                    {"imageUrl":"images/mark-rush-icon.png","field":"isRush"}
                 ],
                 [
-                    {"imageUrl":"/images/policy-icon.png","field":"isPolicy"},
-                    {"imageUrl":"/images/top-nonpolicy-icon.png","field":"isNonPolicy"},
-                    {"imageUrl":"/images/others-icon.png","field":"isOthers"}
+                    {"imageUrl":"images/policy-icon.png","field":"isPolicy"},
+                    {"imageUrl":"images/top-nonpolicy-icon.png","field":"isNonPolicy"},
+                    {"imageUrl":"images/others-icon.png","field":"isOthers"}
                 ]
             ],
             "infoColumns":[],
@@ -71,8 +71,8 @@
             "markers":[],
             "infoColumns":[],
             "actions":[
-                {"id":3,"text":"Process3","imageUrl":"/images/edit-icon.png"},
-                {"id":4,"text":"Process4","imageUrl":"/images/delete-icon.png"}
+                {"id":3,"text":"Process3","imageUrl":"images/edit-icon.png"},
+                {"id":4,"text":"Process4","imageUrl":"images/delete-icon.png"}
             ]
         }
     ]

@@ -1,5 +1,5 @@
 {
-    "apiUrl":"/api/demo",
+    "apiUrl":"api/demo",
     "paginate":false,
     "pagerSeriesCount": null,
     "count": 1,
@@ -15,16 +15,16 @@
             "alignment":"center",
             "markers":[
                 [
-                    {"imageUrl":"/images/mark-rush-icon.png","field":"isRush"}
+                    {"imageUrl":"images/mark-rush-icon.png","field":"isRush"}
                 ],
                 [
-                    {"imageUrl":"/images/policy-icon.png","field":"isPolicy"},
-                    {"imageUrl":"/images/top-nonpolicy-icon.png","field":"isNonPolicy"},
-                    {"imageUrl":"/images/others-icon.png","field":"isOthers"}
+                    {"imageUrl":"images/policy-icon.png","field":"isPolicy"},
+                    {"imageUrl":"images/top-nonpolicy-icon.png","field":"isNonPolicy"},
+                    {"imageUrl":"images/others-icon.png","field":"isOthers"}
                 ],
                 [
-                    {"imageUrl":"/images/dms-only.png","field":"isDmsOnly"},
-                    {"imageUrl":"/images/epic-only.png","field":"isEpicOnly"}
+                    {"imageUrl":"images/dms-only.png","field":"isDmsOnly"},
+                    {"imageUrl":"images/epic-only.png","field":"isEpicOnly"}
                 ]
             ],
             "infoColumns":[
@@ -34,8 +34,8 @@
             "actions":[
                 {"id":2,"text":"Process1","imageUrl":null},
                 {"id":4,"text":"Process2","imageUrl":null},
-                {"id":3,"text":"Process3","imageUrl":"/images/edit-icon.png"},
-                {"id":5,"text":"Process4","imageUrl":"/images/delete-icon.png"}
+                {"id":3,"text":"Process3","imageUrl":"images/edit-icon.png"},
+                {"id":5,"text":"Process4","imageUrl":"images/delete-icon.png"}
             ]
         }
     ]
