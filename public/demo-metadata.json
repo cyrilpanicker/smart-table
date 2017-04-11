@@ -3,14 +3,14 @@
     "paginate":false,
     "pagerSeriesCount": null,
     "count": 1,
-    "rowSelectable":false,
+    "isRowSelectable":false,
     "rowSelectorColumnWidth":null,
     "paginationTitleTemplate":null,
     "noRecordsMessage":null,
     "loadingMessage":"Loading data.",
     "columns":[
         {
-            "title":"All possible content in a single table cell","field":"rowContent","sortable":false,
+            "title":"All possible content in a single table cell","field":"rowContent","isSortable":false,
             "defaultSortOrder":null,"width":null,"defaultText":null,"isFieldActionable":true,"infoTooltipPosition":"top",
             "alignment":"center",
             "markers":[

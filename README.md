@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="/smart-table/smart-table.css" />
 <script src="/libs/jquery.min.js"></script>
 <script src="/libs/angular.min.js"></script>
+<script src="/libs/angular-sanitize.min.js"></script>
 <script src="/libs/ng-table.js"></script>
 <script src="/smart-table/smart-table.js"></script>
 ```
@@ -15,16 +16,16 @@ var metadata = {
     "paginate":true,
     "pagerSeriesCount": 4,
     "count": 5,
-    "rowSelectable":true,
+    "isRowSelectable":true,
     "rowSelectorColumnWidth":5,
     "paginationTitleTemplate":"Showing {FROM} to {TO} of {TOTAL} Users",
     "noRecordsMessage":"No records to show.",
     "loadingMessage":"Loading data.",
     "columns":[
         {
-            "title":"ID","field": "id","sortable":true,"defaultSortOrder":null,"width":7,
-            "defaultText":"--","isFieldActionable":true,"infoTooltipPosition":null,
-            "alignment":"right",
+            "title":"ID","field": "id","isSortable":true,"defaultSortOrder":null,"width":7,
+            "defaultText":"-","isFieldActionable":true,"infoTooltipPosition":null,
+            "alignment":"right","maxLength":null,
             "markers":[
                 [
                     {"imageUrl":"/images/mark-rush-icon.png","property":"isRush"}
@@ -39,36 +40,36 @@ var metadata = {
             "actions":[]
         },
         {
-            "title": "Name","field": "name","sortable":true,"defaultSortOrder":"desc","width":7,
-            "defaultText":"--","isFieldActionable":false,"infoTooltipPosition":null,
-            "alignment":"right",
+            "title": "Name","field": "name","isSortable":true,"defaultSortOrder":"desc","width":7,
+            "defaultText":"-","isFieldActionable":false,"infoTooltipPosition":null,
+            "alignment":"left","maxLength":10,
             "markers":[],
             "infoColumns":[],
             "actions":[]
         },
         {
-            "title": "Skill","field": "skill","sortable":false,"defaultSortOrder":null,"width":null,
+            "title": "Skill","field": "skill","isSortable":false,"defaultSortOrder":null,"width":null,
             "defaultText":"NA","isFieldActionable":false,"infoTooltipPosition":null,
-            "alignment":"center",
+            "alignment":"center","maxLength":3,
             "markers":[],
             "infoColumns":[],
             "actions":[]
         },
         {
-            "title": null,"field": null,"sortable":null,"defaultSortOrder":null,"width":3,
+            "title": null,"field": null,"isSortable":null,"defaultSortOrder":null,"width":3,
             "defaultText":null,"isFieldActionable":false,"infoTooltipPosition":"top",
-            "alignment":"center",
+            "alignment":"center","maxLength":null,
             "markers":[],
             "infoColumns":[
-                {"title": "Info1","field": "info1","defaultText":"--"},
+                {"title": "Info1","field": "info1","defaultText":"-"},
                 {"title": "Info2","field": "info2","defaultText":"Not Applicable"}
             ],
             "actions":[]
         },
         {
-            "title":"Actions1","field":null,"sortable":false,"defaultSortOrder":null,"width":14,
+            "title":"Actions1","field":null,"isSortable":false,"defaultSortOrder":null,"width":14,
             "defaultText":null,"isFieldActionable":false,"infoTooltipPosition":null,
-            "alignment":"center",
+            "alignment":"center","maxLength":null,
             "markers":[],
             "infoColumns":[],
             "actions":[
@@ -77,9 +78,9 @@ var metadata = {
             ]
         },
         {
-            "title":"Actions2","field":null,"sortable":false,"defaultSortOrder":null,"width":7,
+            "title":"Actions2","field":null,"isSortable":false,"defaultSortOrder":null,"width":7,
             "defaultText":null,"isFieldActionable":false,"infoTooltipPosition":null,
-            "alignment":"center",
+            "alignment":"center","maxLength":null,
             "markers":[],
             "infoColumns":[],
             "actions":[

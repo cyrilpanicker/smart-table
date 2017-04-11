@@ -58,11 +58,11 @@ app.listen(port, ipaddress, function() {
 var data = [
     {
         "resultSet":[
-            {"id":1,"name":"","skill":"1","info1":null,"info2":"1","isRush":false,"isPolicy":true,"isNonPolicy":false,"isOthers":false,"isDmsOnly":true,"isEpicOnly":false},
+            {"id":1,"name":"","skill":"Skill1","info1":null,"info2":"1","isRush":false,"isPolicy":true,"isNonPolicy":false,"isOthers":false,"isDmsOnly":true,"isEpicOnly":false},
             {"id":2,"name":"2","skill":null,"info1":"2","info2":"","isRush":false,"isPolicy":false,"isNonPolicy":true,"isOthers":false,"isDmsOnly":false,"isEpicOnly":false},
             {"id":3,"name":null,"skill":"3","info1":"3","info2":"3","isRush":true,"isPolicy":false,"isNonPolicy":false,"isOthers":true,"isDmsOnly":false,"isEpicOnly":true},
-            {"id":4,"name":"4","skill":"4","info1":"4","info2":"4","isRush":false,"isPolicy":false,"isNonPolicy":false,"isOthers":false,"isDmsOnly":false,"isEpicOnly":false},
-            {"id":5,"name":"5","skill":"5","info1":"5","info2":"5","isRush":true,"isPolicy":false,"isNonPolicy":false,"isOthers":false,"isDmsOnly":true,"isEpicOnly":false},
+            {"id":4,"name":"Name4","skill":"4","info1":"4","info2":"4","isRush":false,"isPolicy":false,"isNonPolicy":false,"isOthers":false,"isDmsOnly":false,"isEpicOnly":false},
+            {"id":5,"name":"Namename namename namename namename 5","skill":"Skill5","info1":"5","info2":"5","isRush":true,"isPolicy":false,"isNonPolicy":false,"isOthers":false,"isDmsOnly":true,"isEpicOnly":false},
             {"id":6,"name":"6","skill":"6","info1":"6","info2":"6","isRush":false,"isPolicy":false,"isNonPolicy":false,"isOthers":false,"isDmsOnly":false,"isEpicOnly":false},
             {"id":7,"name":"7","skill":"7","info1":"7","info2":"7","isRush":false,"isPolicy":false,"isNonPolicy":false,"isOthers":false,"isDmsOnly":false,"isEpicOnly":false},
             {"id":8,"name":"8","skill":"8","info1":"8","info2":"8","isRush":true,"isPolicy":false,"isNonPolicy":false,"isOthers":false,"isDmsOnly":false,"isEpicOnly":false},

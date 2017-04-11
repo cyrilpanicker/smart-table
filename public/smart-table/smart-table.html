@@ -6,13 +6,13 @@
     <table ng-table="ngTableParamsObject">
         <thead>
             <tr>
-                <th class="row-select" ng-show="params.$params.rowSelectable" ng-style="{'width':params.$params.rowSelectorColumnWidth+'%'}">
+                <th class="row-select" ng-show="params.$params.isRowSelectable" ng-style="{'width':params.$params.rowSelectorColumnWidth+'%'}">
                     <input id="selectAllCheckBox" type="checkbox" ng-checked="model.allRowsSelected" ng-click="model.onSelectAllClick($event)" />
                 </th>
                 <th ng-repeat="col in params.$params.columns"
-                    ng-click="col.sortable && params.serverSortBy(col.field)"
+                    ng-click="col.isSortable && params.serverSortBy(col.field)"
                     ng-class="{
-                        'sortable':col.sortable,
+                        'sortable':col.isSortable,
                         'sort-asc':model.sortParams.sortColumn===col.field && model.sortParams.sortOrder==='asc',
                         'sort-desc':model.sortParams.sortColumn===col.field && model.sortParams.sortOrder==='desc'
                     }"
@@ -24,7 +24,7 @@
         </thead>
         <tbody>
             <tr ng-repeat="datum in $data" ng-show="!model.loading && $data.length">
-                <td class="row-select" ng-show="params.$params.rowSelectable">
+                <td class="row-select" ng-show="params.$params.isRowSelectable">
                     <input type="checkbox" ng-model="datum._isSelected" ng-click="model.updateSelectedRows()" />
                 </td>
                 <td ng-repeat="col in params.$params.columns" ng-style="{'text-align':col.alignment?col.alignment:'left'}">
@@ -34,8 +34,11 @@
                         </div>
                     </div>
                     <div class="field-container">
-                        <a href="" ng-show="col.isFieldActionable" ng-click="model.onAction(null,datum)" ng-bind="!datum[col.field] ? ((datum[col.field]===0||datum[col.field]===false) ? datum[col.field] : col.defaultText) : datum[col.field]"></a>
-                        <span ng-show="!col.isFieldActionable" ng-bind="!datum[col.field] ? ((datum[col.field]===0||datum[col.field]===false) ? datum[col.field] : col.defaultText) : datum[col.field]"></span>
+                        <a href="" ng-show="col.isFieldActionable" ng-click="model.onAction(null,datum)" ng-bind-html="!datum[col.field] ? ((datum[col.field]===0||datum[col.field]===false) ? datum[col.field] : col.defaultText) : datum[col.field]"></a>
+                        <span ng-show="!col.isFieldActionable"
+                            title="{{datum[col.field] && col.maxLength && datum[col.field].length>col.maxLength ? datum[col.field] : ''}}"
+                            ng-bind-html="(!datum[col.field] ? ((datum[col.field]===0||datum[col.field]===false) ? datum[col.field] : col.defaultText) : datum[col.field]) | smartTableTextTruncate:col.maxLength"
+                        ></span>
                     </div>
                     <div ng-show="col.infoColumns.length" smart-table-tooltip-wrapper class="info-columns-container tooltip-wrapper {{col.infoTooltipPosition ? ' '+col.infoTooltipPosition : ' left'}}">
                         <a href="" class="info-icon"></a>
@@ -58,13 +61,13 @@
                 </td>
             </tr>
             <tr class="no-records" ng-show="!model.loading && !$data.length">
-                <td colspan="{{params.$params.columns.length + params.$params.rowSelectable}}"
+                <td colspan="{{params.$params.columns.length + params.$params.isRowSelectable}}"
                     ng-bind="model.noRecordsMessage"
                 >
                 </td>
             </tr>
             <tr class="loading-message" ng-show="model.loading">
-                <td colspan="{{params.$params.columns.length + params.$params.rowSelectable}}"
+                <td colspan="{{params.$params.columns.length + params.$params.isRowSelectable}}"
                     ng-bind="model.loadingMessage"
                 >
                 </td>
