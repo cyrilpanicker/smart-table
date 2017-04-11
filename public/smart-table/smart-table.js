@@ -117,7 +117,7 @@
 					   .replace('{FROM}', from)
 					   .replace('{TO}', to)
 					   .replace('{TOTAL}', params.total());
-                    if(params.$params.rowSelectable){
+                    if(params.$params.isRowSelectable){
                         currentData = event.targetScope.$data;
                         resetSelectedRows();
                         model.updateSelectedRows();
