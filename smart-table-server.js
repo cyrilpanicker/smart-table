@@ -4,12 +4,6 @@ var bodyParser = require('body-parser');
 var app = express();
 app.use(bodyParser.json());
 
-if(process.env.NODE_ENV === 'production'){
-    app.get('/',function(request,response){
-        response.sendFile('public/prod-index.html',{root : __dirname});
-    });
-}
-
 app.use(express.static('./public'));
 
 app.post('/api/users',(request,response) => {
