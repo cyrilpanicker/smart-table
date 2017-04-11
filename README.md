@@ -28,12 +28,12 @@ var metadata = {
             "alignment":"right","maxLength":null,
             "markers":[
                 [
-                    {"imageUrl":"/images/mark-rush-icon.png","property":"isRush"}
+                    {"imageUrl":"/images/mark-rush-icon.png","field":"isRush"}
                 ],
                 [
-                    {"imageUrl":"/images/policy-icon.png","property":"isPolicy"},
-                    {"imageUrl":"/images/top-nonpolicy-icon.png","property":"isNonPolicy"},
-                    {"imageUrl":"/images/others-icon.png","property":"isOthers"}
+                    {"imageUrl":"/images/policy-icon.png","field":"isPolicy"},
+                    {"imageUrl":"/images/top-nonpolicy-icon.png","field":"isNonPolicy"},
+                    {"imageUrl":"/images/others-icon.png","field":"isOthers"}
                 ]
             ],
             "infoColumns":[],
