@@ -7,36 +7,7 @@ app.use(bodyParser.json());
 app.use(express.static('./public'));
 
 app.post('/api/users',(request,response) => {
-    // setTimeout(function(){
-        var startPage = request.body.startPage;
-        var endPage = request.body.endPage;
-        if(!startPage && !endPage){
-            response.send({
-                resultSet:data[0].resultSet.concat(data[1].resultSet),
-                totalItems:40
-            });
-            // response.send({
-            //     "resultSet":[],
-            //     "totalItems":0
-            // });
-        }else{
-            if(startPage===1 && endPage===4){
-                response.send(data[0]);
-            }else if(startPage===5 && endPage===8){
-                response.send(data[1]);
-            }else if(startPage===9 && endPage===12){
-                response.send(data[2]);
-            }else if(startPage===13 && endPage===13){
-                response.send(data[3]);
-            }else{
-                console.log(startPage,endPage);
-            }
-            // response.send({
-            //     "resultSet":[],
-            //     "totalItems":0
-            // });
-        }
-    // },1000);
+    response.send(data[0]);
 });
 
 app.post('/api/demo',function(request,response){
@@ -58,28 +29,13 @@ app.listen(port, ipaddress, function() {
 var data = [
     {
         "resultSet":[
-            {"id":1,"name":"","skill":"Skill1","info1":null,"info2":"1","isRush":false,"isPolicy":true,"isNonPolicy":false,"isOthers":false,"isDmsOnly":true,"isEpicOnly":false},
-            {"id":2,"name":"2","skill":null,"info1":"2","info2":"","isRush":false,"isPolicy":false,"isNonPolicy":true,"isOthers":false,"isDmsOnly":false,"isEpicOnly":false},
-            {"id":3,"name":null,"skill":"3","info1":"3","info2":"3","isRush":true,"isPolicy":false,"isNonPolicy":false,"isOthers":true,"isDmsOnly":false,"isEpicOnly":true},
-            {"id":4,"name":"Name4","skill":"4","info1":"4","info2":"4","isRush":false,"isPolicy":false,"isNonPolicy":false,"isOthers":false,"isDmsOnly":false,"isEpicOnly":false},
-            {"id":5,"name":"Namename namename namename namename 5","skill":"Skill5","info1":"5","info2":"5","isRush":true,"isPolicy":false,"isNonPolicy":false,"isOthers":false,"isDmsOnly":true,"isEpicOnly":false},
-            {"id":6,"name":"6","skill":"6","info1":"6","info2":"6","isRush":false,"isPolicy":false,"isNonPolicy":false,"isOthers":false,"isDmsOnly":false,"isEpicOnly":false},
-            {"id":7,"name":"7","skill":"7","info1":"7","info2":"7","isRush":false,"isPolicy":false,"isNonPolicy":false,"isOthers":false,"isDmsOnly":false,"isEpicOnly":false},
-            {"id":8,"name":"8","skill":"8","info1":"8","info2":"8","isRush":true,"isPolicy":false,"isNonPolicy":false,"isOthers":false,"isDmsOnly":false,"isEpicOnly":false},
-            {"id":9,"name":"9","skill":"9","info1":"9","info2":"9","isRush":false,"isPolicy":false,"isNonPolicy":false,"isOthers":false,"isDmsOnly":false,"isEpicOnly":false},
-            {"id":10,"name":"10","skill":"10","info1":"10","info2":"10","isRush":false,"isPolicy":false,"isNonPolicy":false,"isOthers":false,"isDmsOnly":false,"isEpicOnly":false},
-            {"id":11,"name":"11","skill":"11","info1":"11","info2":"11","isRush":true,"isPolicy":false,"isNonPolicy":false,"isOthers":false,"isDmsOnly":false,"isEpicOnly":false},
-            {"id":12,"name":"12","skill":"12","info1":"12","info2":"12","isRush":false,"isPolicy":false,"isNonPolicy":false,"isOthers":false,"isDmsOnly":false,"isEpicOnly":false},
-            {"id":13,"name":"13","skill":"13","info1":"13","info2":"13","isRush":false,"isPolicy":false,"isNonPolicy":false,"isOthers":false,"isDmsOnly":false,"isEpicOnly":false},
-            {"id":14,"name":"14","skill":"14","info1":"14","info2":"14","isRush":false,"isPolicy":false,"isNonPolicy":false,"isOthers":false,"isDmsOnly":false,"isEpicOnly":false},
-            {"id":15,"name":"15","skill":"15","info1":"15","info2":"15","isRush":false,"isPolicy":false,"isNonPolicy":false,"isOthers":false,"isDmsOnly":false,"isEpicOnly":false},
-            {"id":16,"name":"16","skill":"16","info1":"16","info2":"16","isRush":false,"isPolicy":false,"isNonPolicy":false,"isOthers":false,"isDmsOnly":false,"isEpicOnly":false},
-            {"id":17,"name":"17","skill":"17","info1":"17","info2":"17","isRush":true,"isPolicy":false,"isNonPolicy":false,"isOthers":false,"isDmsOnly":false,"isEpicOnly":false},
-            {"id":18,"name":"18","skill":"18","info1":"18","info2":"18","isRush":false,"isPolicy":false,"isNonPolicy":false,"isOthers":false,"isDmsOnly":false,"isEpicOnly":false},
-            {"id":19,"name":"19","skill":"19","info1":"19","info2":"19","isRush":false,"isPolicy":false,"isNonPolicy":false,"isOthers":false,"isDmsOnly":false,"isEpicOnly":false},
-            {"id":20,"name":"20","skill":"20","info1":"20","info2":"20","isRush":false,"isPolicy":false,"isNonPolicy":false,"isOthers":false,"isDmsOnly":false,"isEpicOnly":false}
+            {"id":{value:"1",span:1},"name":{value:"1",span:1},"skill":{value:"1",span:1},"info1":{value:"1",span:1},"info2":{value:"1",span:1}},
+            {"id":{value:"2",span:2},"name":{value:"2",span:2},"skill":{value:"2",span:2},"info1":{value:"a",span:1},"info2":{value:"c",span:1}},
+            {"id":"//","name":"//","skill":"//","info1":{value:"b",span:1},"info2":{value:"d",span:1}},
+            {"id":{value:"3",span:1},"name":{value:"3",span:1},"skill":{value:"3",span:1},"info1":{value:"3",span:1},"info2":{value:"3",span:1}},
+            {"id":{value:"4",span:1},"name":{value:"4",span:1},"skill":{value:"4",span:1},"info1":{value:"4",span:1},"info2":{value:"4",span:1}}
         ],
-        "totalItems":62
+        "totalItems":5
     },
     {
         "resultSet":[
