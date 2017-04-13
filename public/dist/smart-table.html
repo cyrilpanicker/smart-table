@@ -1,12 +1,12 @@
 <div class="smart-table" ng-init="model=smartTableModel">
     <div class="top-pagination" ng-if="ngTableParamsObject.$params.paginate"
-        ng-include="'smart-table/smart-table-pagination.html'"
+        ng-include="'dist/smart-table-pagination.html'"
     >
     </div>
     <table ng-table="ngTableParamsObject">
         <thead>
             <tr>
-                <th class="row-select" ng-show="params.$params.isRowSelectable" ng-style="{'width':params.$params.rowSelectorColumnWidth+'%'}">
+                <th class="row-select" ng-show="params.$params.isRowSelectable">
                     <input id="selectAllCheckBox" type="checkbox" ng-checked="model.allRowsSelected" ng-click="model.onSelectAllClick($event)" />
                 </th>
                 <th ng-repeat="col in params.$params.columns"
@@ -75,7 +75,7 @@
         </tbody>
     </table>
     <div class="bottom-pagination" ng-if="ngTableParamsObject.$params.paginate"
-        ng-include="'smart-table/smart-table-pagination.html'"
+        ng-include="'dist/smart-table-pagination.html'"
     >
     </div>
 </div>

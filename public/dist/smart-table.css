@@ -63,6 +63,7 @@
 
 .smart-table table th.row-select {
   text-align: center;
+  width: 40px;
 }
 
 .smart-table table tbody tr {
