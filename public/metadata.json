@@ -15,14 +15,18 @@
             "defaultText":"-","isFieldActionable":true,"infoTooltipPosition":null,
             "alignment":"right","maxLength":null,
             "markers":[
-                [
-                    {"imageUrl":"images/mark-rush-icon.png","field":"isRush"}
-                ],
-                [
-                    {"imageUrl":"images/policy-icon.png","field":"isPolicy"},
-                    {"imageUrl":"images/top-nonpolicy-icon.png","field":"isNonPolicy"},
-                    {"imageUrl":"images/others-icon.png","field":"isOthers"}
-                ]
+                {
+                    "field":"isRush",
+                    "mappings":[{"imageUrl":"images/mark-rush-icon.png","mappedValue":1}]
+                },
+                {
+                    "field":"docCategory",
+                    "mappings":[
+                        {"imageUrl":"images/policy-icon.png","mappedValue":1},
+                        {"imageUrl":"images/top-nonpolicy-icon.png","mappedValue":2},
+                        {"imageUrl":"images/others-icon.png","mappedValue":3}
+                    ]
+                }
             ],
             "infoColumns":[],
             "actions":[]

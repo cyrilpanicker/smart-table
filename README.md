@@ -12,35 +12,40 @@
 ***MetaData :***
 ```javascript
 var metadata = {
-    "apiUrl":"/api/users",
+    "apiUrl":"api/users",
     "paginate":true,
     "pagerSeriesCount": 4,
     "count": 5,
     "isRowSelectable":true,
-    "rowSelectorColumnWidth":5,
     "paginationTitleTemplate":"Showing {FROM} to {TO} of {TOTAL} Users",
     "noRecordsMessage":"No records to show.",
     "loadingMessage":"Loading data.",
+    "defaultSortColumn":"name",
+    "defaultSortOrder":"desc",
     "columns":[
         {
-            "title":"ID","field": "id","isSortable":true,"defaultSortOrder":null,"width":7,
+            "title":"ID","field": "id","isSortable":true,"width":7,
             "defaultText":"-","isFieldActionable":true,"infoTooltipPosition":null,
             "alignment":"right","maxLength":null,
             "markers":[
-                [
-                    {"imageUrl":"/images/mark-rush-icon.png","field":"isRush"}
-                ],
-                [
-                    {"imageUrl":"/images/policy-icon.png","field":"isPolicy"},
-                    {"imageUrl":"/images/top-nonpolicy-icon.png","field":"isNonPolicy"},
-                    {"imageUrl":"/images/others-icon.png","field":"isOthers"}
-                ]
+                {
+                    "field":"isRush",
+                    "mappings":[{"imageUrl":"images/mark-rush-icon.png","mappedValue":1}]
+                },
+                {
+                    "field":"docCategory",
+                    "mappings":[
+                        {"imageUrl":"images/policy-icon.png","mappedValue":1},
+                        {"imageUrl":"images/top-nonpolicy-icon.png","mappedValue":2},
+                        {"imageUrl":"images/others-icon.png","mappedValue":3}
+                    ]
+                }
             ],
             "infoColumns":[],
             "actions":[]
         },
         {
-            "title": "Name","field": "name","isSortable":true,"defaultSortOrder":"desc","width":7,
+            "title": "Name","field": "name","isSortable":true,"width":7,
             "defaultText":"-","isFieldActionable":false,"infoTooltipPosition":null,
             "alignment":"left","maxLength":10,
             "markers":[],
@@ -48,7 +53,7 @@ var metadata = {
             "actions":[]
         },
         {
-            "title": "Skill","field": "skill","isSortable":false,"defaultSortOrder":null,"width":null,
+            "title": "Skill","field": "skill","isSortable":false,"width":null,
             "defaultText":"NA","isFieldActionable":false,"infoTooltipPosition":null,
             "alignment":"center","maxLength":3,
             "markers":[],
@@ -56,7 +61,7 @@ var metadata = {
             "actions":[]
         },
         {
-            "title": null,"field": null,"isSortable":null,"defaultSortOrder":null,"width":3,
+            "title": null,"field": null,"isSortable":null,"width":3,
             "defaultText":null,"isFieldActionable":false,"infoTooltipPosition":"top",
             "alignment":"center","maxLength":null,
             "markers":[],
@@ -67,7 +72,7 @@ var metadata = {
             "actions":[]
         },
         {
-            "title":"Actions1","field":null,"isSortable":false,"defaultSortOrder":null,"width":14,
+            "title":"Actions1","field":null,"isSortable":false,"width":14,
             "defaultText":null,"isFieldActionable":false,"infoTooltipPosition":null,
             "alignment":"center","maxLength":null,
             "markers":[],
@@ -78,14 +83,14 @@ var metadata = {
             ]
         },
         {
-            "title":"Actions2","field":null,"isSortable":false,"defaultSortOrder":null,"width":7,
+            "title":"Actions2","field":null,"isSortable":false,"width":7,
             "defaultText":null,"isFieldActionable":false,"infoTooltipPosition":null,
             "alignment":"center","maxLength":null,
             "markers":[],
             "infoColumns":[],
             "actions":[
-                {"id":3,"text":"Process3","imageUrl":"/images/edit-icon.png"},
-                {"id":4,"text":"Process4","imageUrl":"/images/delete-icon.png"}
+                {"id":3,"text":"Process3","imageUrl":"images/edit-icon.png"},
+                {"id":4,"text":"Process4","imageUrl":"images/delete-icon.png"}
             ]
         }
     ]

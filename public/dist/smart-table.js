@@ -81,6 +81,16 @@
                         }));
                     }
                 };
+                model.getMarkerImageUrl = function(value,mappings){
+                    var filteredMappings = mappings.filter(function(mapping){
+                        return mapping.mappedValue == value;
+                    });
+                    if(!filteredMappings.length){
+                        return null;
+                    }else{
+                        return filteredMappings[0].imageUrl;
+                    }
+                };
                 model.onAction = function(actionId,datum){
                     var onAction = $scope.$eval(model.onActionCallbackString);
                     if(onAction && typeof onAction === 'function'){

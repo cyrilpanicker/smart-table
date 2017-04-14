@@ -30,7 +30,7 @@
                 <td ng-repeat="col in params.$params.columns" ng-style="{'text-align':col.alignment?col.alignment:'left'}">
                     <div class="marker-container">
                         <div class="marker-group" ng-repeat="markerGroup in col.markers">
-                            <img class="marker-image" ng-repeat="marker in markerGroup" ng-show="datum[marker.field]" ng-src="{{marker.imageUrl}}" />
+                            <img class="marker-image" ng-src="{{markerGroup.mappings && model.getMarkerImageUrl(datum[markerGroup.field],markerGroup.mappings)}}" />
                         </div>
                     </div>
                     <div class="field-container">
