@@ -15,18 +15,25 @@
             "width":null,"defaultText":null,"isFieldActionable":true,"infoTooltipPosition":"top",
             "alignment":"center",
             "markers":[
-                [
-                    {"imageUrl":"images/mark-rush-icon.png","field":"isRush"}
-                ],
-                [
-                    {"imageUrl":"images/policy-icon.png","field":"isPolicy"},
-                    {"imageUrl":"images/top-nonpolicy-icon.png","field":"isNonPolicy"},
-                    {"imageUrl":"images/others-icon.png","field":"isOthers"}
-                ],
-                [
-                    {"imageUrl":"images/dms-only.png","field":"isDmsOnly"},
-                    {"imageUrl":"images/epic-only.png","field":"isEpicOnly"}
-                ]
+                {
+                    "field":"isRush",
+                    "mappings":[{"imageUrl":"images/mark-rush-icon.png","mappedValue":1}]
+                },
+                {
+                    "field":"docCategory",
+                    "mappings":[
+                        {"imageUrl":"images/policy-icon.png","mappedValue":1},
+                        {"imageUrl":"images/top-nonpolicy-icon.png","mappedValue":2},
+                        {"imageUrl":"images/others-icon.png","mappedValue":3}
+                    ]
+                },
+                {
+                    "field":"source",
+                    "mappings":[
+                        {"imageUrl":"images/dms-only.png","mappedValue":1},
+                        {"imageUrl":"images/epic-only.png","mappedValue":2}
+                    ]
+                }
             ],
             "infoColumns":[
                 {"title": "Info1","field": "info1","defaultText":"--"},

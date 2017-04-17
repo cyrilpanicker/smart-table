@@ -41,7 +41,7 @@ app.post('/api/users',(request,response) => {
 
 app.post('/api/demo',function(request,response){
     response.send({
-        resultSet:[{"id":1,"rowContent":"Row Content","info1":"Info---1","info2":"Info---2","isRush":1,"docCategory":0,"isPolicy":true,"isNonPolicy":false,"isOthers":false,"isDmsOnly":true,"isEpicOnly":false}],
+        resultSet:[{"id":1,"rowContent":"Row Content","info1":"Info---1","info2":"Info---2","isRush":1,"docCategory":2,"source":2}],
         totalItems:1
     });
 });
