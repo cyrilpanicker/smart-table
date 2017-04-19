@@ -2,7 +2,7 @@
     "apiUrl":"api/users",
     "paginate":true,
     "pagerSeriesCount": 4,
-    "count": 5,
+    "count": 25,
     "isRowSelectable":true,
     "paginationTitleTemplate":"Showing {FROM} to {TO} of {TOTAL} Users",
     "noRecordsMessage":"No records to show.",
@@ -35,9 +35,9 @@
             "title": "Name","field": "name","isSortable":true,"width":7,
             "defaultText":"-","isFieldActionable":false,"infoTooltipPosition":null,
             "alignment":"left","maxLength":10,
-            "markers":[],
-            "infoColumns":[],
-            "actions":[]
+            "markers":null,
+            "infoColumns":null,
+            "actions":null
         },
         {
             "title": "Skill","field": "skill","isSortable":false,"width":null,
