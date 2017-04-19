@@ -17,12 +17,12 @@ angular.module('app',['smartTable'])
 		$scope.usersTable = new SmartTableParams(response.data);
 	});
 
-	$http({
-		method:'GET',
-		url:'demo-metadata.json'
-	}).then(function(response){
-		$scope.demoTable = new SmartTableParams(response.data);
-	});
+	// $http({
+	// 	method:'GET',
+	// 	url:'demo-metadata.json'
+	// }).then(function(response){
+	// 	$scope.demoTable = new SmartTableParams(response.data);
+	// });
 
 	$scope.onSearch = function(searchModel){
 		$scope.searchParams = angular.copy($scope.searchModel);

@@ -8,7 +8,7 @@
             replace:true,
             scope:true,
             templateUrl:'dist/smart-table.html',
-            controller:['$scope','$attrs','$element',function($scope,$attrs,$element){
+            controller:['$scope','$attrs','$element','$compile',function($scope,$attrs,$element,$compile){
                 var params = null;
                 var model = $scope.smartTableModel = {};
                 var currentData = null;
@@ -97,6 +97,90 @@
                         onAction(actionId,datum);
                     }
                 };
+
+                var createRows = function(columns,isRowSelectable){
+                    var rows = $('<tr class="data-rows" ng-repeat="datum in $data" ng-show="!model.loading && $data.length"></tr>');
+                    if(isRowSelectable){
+                        var rowSelectorCell = $('<td class="row-select"></td>')
+                        rowSelectorCell.append('<input type="checkbox" ng-model="datum._isSelected" ng-click="model.updateSelectedRows()" />');
+                        rows.append(rowSelectorCell);
+                    }
+                    for(var i=0;i<columns.length;i++){
+                        var cell = $('<td></td>')
+                        cell.attr('style','text-align:'+(columns[i].alignment?columns[i].alignment:'left'))
+                        var fieldContainer = $('<div class="field-container"></div>');
+                        var markerContainer = $('<div class="marker-container"></div>');
+                        var infoColumnsContainer = $('<div class="info-columns-container"></div>');
+                        var actionsContainer = $('<div class="actions-container"></div>');
+                        var field = columns[i].field;
+                        var markers = columns[i].markers;
+                        var infoColumns = columns[i].infoColumns;
+                        var actions = columns[i].actions;
+                        if(markers && markers.length){
+                            for(var j=0;j<markers.length;j++){
+                                var markerGroupDatum = markers[j];
+                                var markerGroup = $('<div class="marker-group"></div>');
+                                var image = $('<img class="marker-image"></img>');
+                                image.attr('ng-src',"{{"+markerGroupDatum.mappings.length+" && model.getMarkerImageUrl(datum['"+markerGroupDatum.field+"'],"+JSON.stringify(markerGroupDatum.mappings)+")}}");
+                                markerGroup.append(image);
+                                markerContainer.append(markerGroup);
+                            }
+                        }
+                        if(field){
+                            if(columns[i].isFieldActionable){
+                                var anchor = $('<a href=""></a>');
+                                anchor.attr('ng-click',"model.onAction(null,datum)");
+                                anchor.attr('ng-bind-html',"!datum['"+field+"'] ? ((datum['"+field+"']===0||datum['"+field+"']===false) ? datum['"+field+"'] : col.defaultText) : datum['"+field+"']");
+                                fieldContainer.append(anchor);
+                            }else{
+                                var span = $('<span></span>');
+                                span.attr('ng-bind-html',"(!datum['"+field+"'] ? ((datum['"+field+"']===0||datum['"+field+"']===false) ? datum['"+field+"'] : '"+columns[i].defaultText+"') : datum['"+field+"']) | smartTableTextTruncate:"+columns[i].maxLength);
+                                span.attr('title',"{{datum['"+field+"'] && "+columns[i].maxLength+" && datum['"+field+"'].length>"+columns[i].maxLength+" ? datum['"+field+"'] : ''}}");
+                                fieldContainer.append(span);
+                            }
+                        }
+                        if(infoColumns && infoColumns.length){
+                            infoColumnsContainer.attr('smart-table-tooltip-wrapper','');
+                            infoColumnsContainer.addClass('tooltip-wrapper');
+                            infoColumnsContainer.addClass(columns[i].infoTooltipPosition?columns[i].infoTooltipPosition:'left');
+                            infoColumnsContainer.append('<a href="" class="info-icon"></a>');
+                            var tooltipContainer = $('<div class="tooltip-container"></div>');
+                            var tooltipContent = $('<div class="tooltip-content"></div>');
+                            for(var j=0;j<infoColumns.length;j++){
+                                var infoColumnField = infoColumns[j].field;
+                                var infoColumnSpan = $('<span></span>');
+                                infoColumnSpan.append('<span class="title">'+infoColumns[j].title+' : </span>');
+                                var infoColumnValue = $('<span></span>');
+                                infoColumnValue.attr('ng-bind',"!datum['"+infoColumnField+"'] ? ((datum['"+infoColumnField+"']===0||datum['"+infoColumnField+"']===false) ? datum['"+infoColumnField+"'] : '"+infoColumns[j].defaultText+"') : datum['"+infoColumnField+"']");
+                                infoColumnSpan.append(infoColumnValue);
+                                infoColumnSpan.append('<br/>');
+                                tooltipContent.append(infoColumnSpan);
+                            }
+                            tooltipContainer.append(tooltipContent);
+                            infoColumnsContainer.append(tooltipContainer);
+                        }
+                        if(actions && actions.length){
+                            for(var j=0;j<actions.length;j++){
+                                var actionAnchor = $('<a href=""></a>');
+                                actionAnchor.attr('ng-click',"model.onAction("+actions[j].id+",datum)");
+                                if(actions[j].imageUrl){actionAnchor.addClass('image-link');}
+                                if(!actions[j].imageUrl){
+                                    actionAnchor.append('<span>'+actions[j].text+'</span>');
+                                }else{
+                                    actionAnchor.append('<img src="'+actions[j].imageUrl+'" title="'+actions[j].text+'"></img>')
+                                }
+                                actionsContainer.append(actionAnchor);
+                            }
+                        }
+                        cell.append(markerContainer);
+                        cell.append(fieldContainer);
+                        cell.append(infoColumnsContainer);
+                        cell.append(actionsContainer);
+                        rows.append(cell);
+                    }
+                    return rows;
+                };
+
                 $scope.$watch($attrs.smartTable,function(_params){
                     if(!_params)return;
                     params = $scope.ngTableParamsObject = _params;
@@ -112,6 +196,13 @@
                         model.defaultSortParams.sortOrder = _params.$params.defaultSortOrder;
                     }
                     model.sortParams = angular.copy(model.defaultSortParams);
+
+                });
+                $scope.$on('createRows',function(event,data){
+                    var template = createRows(data.columns,data.isRowSelectable);
+                    // console.log(template[0]);
+                    var compiledTemplate = $compile(template)(data.scope);
+                    $element.find('tbody').prepend(compiledTemplate);                    
                 });
    	            $scope.$on('ngTableAfterReloadData', function(event){
                     if(!params)return;
@@ -136,7 +227,7 @@
         };
     }])
 
-    .factory('SmartTableParams',['$http','ngTableParams',function($http,ngTableParams){
+    .factory('SmartTableParams',['$http','ngTableParams','$rootScope',function($http,ngTableParams,$rootScope){
         return function(parameters,settings){
             var params = null;
             var cachedResponse = null;
@@ -144,13 +235,18 @@
             var model = null;
             var ngTableResetAndReload = null;
             var postData = null;
+            var rowsCreated = false;
             var getServerData = function($defer,_params){
                 _scope = params.settings().$scope;
                 model = _scope.smartTableModel;
-                // TODO:
-                // _scope.$watch('$data',function(data){
-                //     console.log('data');
-                // });
+                if(!rowsCreated && params.$params.columns && _scope){
+                    $rootScope.$broadcast('createRows',{
+                        scope:_scope,
+                        columns:params.$params.columns,
+                        isRowSelectable:params.$params.isRowSelectable
+                    });
+                    rowsCreated=true;
+                }
                 var requestParams = _scope.$eval(model.requestParamsString);
                 var dataFetchStartCallback = _scope.$eval(model.dataFetchStartCallbackString);
                 var dataFetchEndCallback = _scope.$eval(model.dataFetchEndCallbackString);
@@ -225,7 +321,7 @@
 
     .run(['$templateCache',function($templateCache){
         $templateCache.put('dist/smart-table-pagination.html','<nav ng-init="params=ngTableParamsObject;model=smartTableModel"> <p ng-show="params.total()">{{model.paginationTitle}}</p><ul ng-show="params.total()"> <li class="previous" ng-class="{\'disabled\': params.page()===1}"> <a href="" ng-click="model.previous(params.page()===1)"> <span>« PREV</span> </a> </li><li ng-class="{\'selected\': params.page()==page.number}" ng-repeat="page in model.pages"> <a href="" ng-click="model.selectPage(page)"> <span ng-bind="page.number"></span> </a> </li><li class="next" ng-class="{\'disabled\': params.page()===model.numPages}"> <a href="" ng-click="model.next(params.page()===model.numPages)"> <span>NEXT »</span> </a> </li></ul></nav>');
-        $templateCache.put('dist/smart-table.html','<div class="smart-table" ng-init="model=smartTableModel"> <div class="top-pagination" ng-if="ngTableParamsObject.$params.paginate" ng-include="\'dist/smart-table-pagination.html\'" > </div><table ng-table="ngTableParamsObject"> <thead> <tr> <th class="row-select" ng-show="params.$params.isRowSelectable"> <input id="selectAllCheckBox" type="checkbox" ng-checked="model.allRowsSelected" ng-click="model.onSelectAllClick($event)"/> </th> <th ng-repeat="col in params.$params.columns" ng-click="col.isSortable && params.serverSortBy(col.field)" ng-class="{\'sortable\':col.isSortable, \'sort-asc\':model.sortParams.sortColumn===col.field && model.sortParams.sortOrder===\'asc\', \'sort-desc\':model.sortParams.sortColumn===col.field && model.sortParams.sortOrder===\'desc\'}" ng-style="{\'width\':col.width+\'%\'}" > <div ng-bind="col.title"></div></th> </tr></thead> <tbody> <tr ng-repeat="datum in $data" ng-show="!model.loading && $data.length"> <td class="row-select" ng-show="params.$params.isRowSelectable"> <input type="checkbox" ng-model="datum._isSelected" ng-click="model.updateSelectedRows()"/> </td><td ng-repeat="col in params.$params.columns" ng-style="{\'text-align\':col.alignment?col.alignment:\'left\'}"> <div class="marker-container"> <div class="marker-group" ng-repeat="markerGroup in col.markers"> <img class="marker-image" ng-src="{{markerGroup.mappings && model.getMarkerImageUrl(datum[markerGroup.field],markerGroup.mappings)}}"/> </div></div><div class="field-container"> <a href="" ng-show="col.isFieldActionable" ng-click="model.onAction(null,datum)" ng-bind-html="!datum[col.field] ? ((datum[col.field]===0||datum[col.field]===false) ? datum[col.field] : col.defaultText) : datum[col.field]"></a> <span ng-show="!col.isFieldActionable" title="{{datum[col.field] && col.maxLength && datum[col.field].length>col.maxLength ? datum[col.field] : \'\'}}" ng-bind-html="(!datum[col.field] ? ((datum[col.field]===0||datum[col.field]===false) ? datum[col.field] : col.defaultText) : datum[col.field]) | smartTableTextTruncate:col.maxLength" ></span> </div><div ng-show="col.infoColumns.length" smart-table-tooltip-wrapper class="info-columns-container tooltip-wrapper{{col.infoTooltipPosition ? \' \'+col.infoTooltipPosition : \' left\'}}"> <a href="" class="info-icon"></a> <div class="tooltip-container"> <div class="tooltip-content"> <span ng-repeat="innerCol in col.infoColumns"> <span class="title" ng-bind="innerCol.title"></span> : <span ng-bind="!datum[innerCol.field] ? ((datum[innerCol.field]===0||datum[innerCol.field]===false) ? datum[innerCol.field] : innerCol.defaultText) : datum[innerCol.field]"></span> <br/> </span> </div></div></div><div class="actions-container"> <a ng-repeat="action in col.actions" ng-class="{\'image-link\':action.imageUrl}" href="" ng-click="model.onAction(action.id,datum)"> <span ng-show="!action.imageUrl" ng-bind="action.text"></span> <img ng-show="action.imageUrl" ng-src="{{action.imageUrl}}" ng-attr-title="{{action.text}}"/> </a> </div></td></tr><tr class="no-records" ng-show="!model.loading && !$data.length"> <td colspan="{{params.$params.columns.length + params.$params.isRowSelectable}}" ng-bind="model.noRecordsMessage" > </td></tr><tr class="loading-message" ng-show="model.loading"> <td colspan="{{params.$params.columns.length + params.$params.isRowSelectable}}" ng-bind="model.loadingMessage" > </td></tr></tbody> </table> <div class="bottom-pagination" ng-if="ngTableParamsObject.$params.paginate" ng-include="\'dist/smart-table-pagination.html\'" > </div></div>');
+        $templateCache.put('dist/smart-table.html','<div class="smart-table" ng-init="model=smartTableModel"> <div class="top-pagination" ng-if="ngTableParamsObject.$params.paginate" ng-include="\'dist/smart-table-pagination.html\'" > </div><table ng-table="ngTableParamsObject"> <thead> <tr> <th class="row-select" ng-show="params.$params.isRowSelectable"> <input id="selectAllCheckBox" type="checkbox" ng-checked="model.allRowsSelected" ng-click="model.onSelectAllClick($event)"/> </th> <th ng-repeat="col in params.$params.columns" ng-click="col.isSortable && params.serverSortBy(col.field)" ng-class="{\'sortable\':col.isSortable, \'sort-asc\':model.sortParams.sortColumn===col.field && model.sortParams.sortOrder===\'asc\', \'sort-desc\':model.sortParams.sortColumn===col.field && model.sortParams.sortOrder===\'desc\'}" ng-style="{\'width\':col.width+\'%\'}" > <div ng-bind="col.title"></div></th> </tr></thead> <tbody> <tr class="no-records" ng-show="!model.loading && !$data.length"> <td colspan="{{params.$params.columns.length + params.$params.isRowSelectable}}" ng-bind="model.noRecordsMessage" > </td></tr><tr class="loading-message" ng-show="model.loading"> <td colspan="{{params.$params.columns.length + params.$params.isRowSelectable}}" ng-bind="model.loadingMessage" > </td></tr></tbody> </table> <div class="bottom-pagination" ng-if="ngTableParamsObject.$params.paginate" ng-include="\'dist/smart-table-pagination.html\'" > </div></div>');
     }])
 
     .directive('smartTableTooltipWrapper', function ($compile, $timeout) {
