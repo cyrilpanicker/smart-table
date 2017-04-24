@@ -1,5 +1,5 @@
 {
-    "apiUrl":"api/users",
+    "apiUrl":"users",
     "paginate":true,
     "pagerSeriesCount": 4,
     "count": 25,
@@ -33,7 +33,7 @@
         },
         {
             "title": "Name","field": "name","isSortable":true,"width":7,
-            "defaultText":"-","isFieldActionable":false,"infoTooltipPosition":null,
+            "defaultText":"-","isFieldActionable":true,"infoTooltipPosition":null,
             "alignment":"left","maxLength":10,
             "markers":null,
             "infoColumns":null,

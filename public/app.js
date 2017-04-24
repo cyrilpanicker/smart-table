@@ -10,6 +10,8 @@ angular.module('app',['smartTable'])
 	$scope.loading = false;
 	var timeoutPromise;
 
+	$scope.apiUrlBasepath = 'http://localhost:9000/api/';
+
 	$http({
 		method:'GET',
 		url:'metadata.json'
@@ -49,19 +51,22 @@ angular.module('app',['smartTable'])
 		console.log('end');
 	};
 
-	$scope.onUserAction = function(actionId,user){
-		$timeout.cancel(timeoutPromise);
-		if($scope.message){
-			$scope.message += ', ';
-		}
-		if(actionId===null){
-			$scope.message += 'User-'+user.id+' selected';	
-		}else{
-			$scope.message += 'Process-'+actionId+':User-'+user.id;	
-		}
-		timeoutPromise = $timeout(function(){
-			$scope.message = '';
-		},2000);
+	$scope.onUserAction = function(field,actionId,user){
+		console.log(field);
+		console.log(actionId);
+		console.log(user);
+		// $timeout.cancel(timeoutPromise);
+		// if($scope.message){
+		// 	$scope.message += ', ';
+		// }
+		// if(actionId===null){
+		// 	$scope.message += 'User-'+user.id+' selected';	
+		// }else{
+		// 	$scope.message += 'Process-'+actionId+':User-'+user.id;	
+		// }
+		// timeoutPromise = $timeout(function(){
+		// 	$scope.message = '';
+		// },2000);
 	};
 
 }]);

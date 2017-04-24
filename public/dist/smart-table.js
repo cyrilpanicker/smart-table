@@ -11,6 +11,7 @@
             controller:['$scope','$attrs','$element','$compile',function($scope,$attrs,$element,$compile){
                 var params = null;
                 var model = $scope.smartTableModel = {};
+                model.loading = true;
                 var currentData = null;
                 var selectAllCheckBox = $element.find('#selectAllCheckBox')[0];
                 model.dataFetchStartCallbackString = $attrs.onFetchStart;
@@ -18,6 +19,7 @@
                 model.rowSelectCallbackString = $attrs.onRowSelect;
                 model.onActionCallbackString = $attrs.onAction;
                 model.requestParamsString = $attrs.requestParams;
+                model.apiUrlBasepathString = $attrs.apiUrlBasepath;
                 model.currentSortColumn = null;
                 model.sortParams = {sortColumn:null,sortOrder:null};
                 model.selectedRows = [];
@@ -91,10 +93,10 @@
                         return filteredMappings[0].imageUrl;
                     }
                 };
-                model.onAction = function(actionId,datum){
+                model.onAction = function(field,actionId,datum){
                     var onAction = $scope.$eval(model.onActionCallbackString);
                     if(onAction && typeof onAction === 'function'){
-                        onAction(actionId,datum);
+                        onAction(field,actionId,datum);
                     }
                 };
 
@@ -128,8 +130,9 @@
                         }
                         if(field){
                             if(columns[i].isFieldActionable){
+                                cell.addClass('has-actionable-field');
                                 var anchor = $('<a href=""></a>');
-                                anchor.attr('ng-click',"model.onAction(null,datum)");
+                                anchor.attr('ng-click',"model.onAction('"+field+"',null,datum)");
                                 anchor.attr('ng-bind-html',"!datum['"+field+"'] ? ((datum['"+field+"']===0||datum['"+field+"']===false) ? datum['"+field+"'] : col.defaultText) : datum['"+field+"']");
                                 fieldContainer.append(anchor);
                             }else{
@@ -162,7 +165,7 @@
                         if(actions && actions.length){
                             for(var j=0;j<actions.length;j++){
                                 var actionAnchor = $('<a href=""></a>');
-                                actionAnchor.attr('ng-click',"model.onAction("+actions[j].id+",datum)");
+                                actionAnchor.attr('ng-click',"model.onAction(null,"+actions[j].id+",datum)");
                                 if(actions[j].imageUrl){actionAnchor.addClass('image-link');}
                                 if(!actions[j].imageUrl){
                                     actionAnchor.append('<span>'+actions[j].text+'</span>');
@@ -239,6 +242,7 @@
             var getServerData = function($defer,_params){
                 _scope = params.settings().$scope;
                 model = _scope.smartTableModel;
+                model.loading = true;
                 if(!rowsCreated && params.$params.columns && _scope){
                     $rootScope.$broadcast('createRows',{
                         scope:_scope,
@@ -250,17 +254,17 @@
                 var requestParams = _scope.$eval(model.requestParamsString);
                 var dataFetchStartCallback = _scope.$eval(model.dataFetchStartCallbackString);
                 var dataFetchEndCallback = _scope.$eval(model.dataFetchEndCallbackString);
+                var apiUrlBasepath = _scope.$eval(model.apiUrlBasepathString);
                 postData = Object.assign({},requestParams,model.sortParams);
                 if(params.$params.paginate){
                     postData = Object.assign(postData,_params.pagerData,{pageSize:params.$params.count});
                 }
-                model.loading = true;
                 if(dataFetchStartCallback && typeof dataFetchStartCallback === 'function'){
                     dataFetchStartCallback($defer,_params);
                 }
                 $http({
                     method:'POST',
-                    url:parameters.apiUrl,
+                    url:apiUrlBasepath + parameters.apiUrl,
                     data:postData
                 }).then(function(response){
                     cachedResponse = response.data;
