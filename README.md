@@ -100,6 +100,7 @@ var metadata = {
 ```javascript
 angular.module('app',['smartTable'])
 .controller('MainController',['$scope','SmartTableParams', function($scope,SmartTableParams){
+    $scope.apiUrlBasepath = 'http://localhost:9000/api/';
     $scope.usersTable = new SmartTableParams(metadata);
     $scope.searchParams = {param1:'value1'};
     $scope.onRowSelect = function(rows){$scope.selectedRows = rows;};
@@ -117,6 +118,7 @@ angular.module('app',['smartTable'])
 ***HTML :***
 ```html
 <div smart-table="usersTable"
+    api-url-basepath="apiUrlBasepath"
     request-params="searchParams"
     on-row-select="onRowSelect"
     on-fetch-start="onUsersDataFetchStart"
