@@ -268,10 +268,16 @@
                 };                
                 if (dataFetchStartCallback && typeof dataFetchStartCallback === 'function') {
                     request = dataFetchStartCallback(request);
+                    if(!request){
+                        throw new Error('"'+model.dataFetchStartCallbackString+'" should return "request" object');
+                    }
                 }
                 $http(request).then(function (response) {
                     if (dataFetchEndCallback && typeof dataFetchEndCallback === 'function') {
                         response = dataFetchEndCallback(response,null);
+                        if(!response){
+                            throw new Error('"'+model.dataFetchEndCallbackString+'" should return "response" object');
+                        }
                     }
                     if(!response.data.hasOwnProperty('resultSet')){
                         throw new Error('resultSet node not found in response.');

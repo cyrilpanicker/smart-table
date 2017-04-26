@@ -46,6 +46,7 @@ angular.module('app',['smartTable'])
 		// request.method = 'GET';
 		// request.params = request.data;
 		// delete request.data;
+		request.headers = {header1:'header1'};
 		return request;
 	};
 
