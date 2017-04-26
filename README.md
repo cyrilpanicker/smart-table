@@ -111,8 +111,14 @@ angular.module('app',['smartTable'])
             $scope.message = 'Process-'+actionId+' selected for user with ID '+user.id;
         }
     };
-    $scope.onUsersDataFetchStart = function(){console.log('fetch-data-start');};
-    $scope.onUsersDataFetchEnd = function(){console.log('fetch-data-end');};
+    $scope.onUsersDataFetchStart = function(request){
+        console.log('fetch-data-start');
+        return request;
+    };
+    $scope.onUsersDataFetchEnd = function(response){
+        console.log('fetch-data-end');
+        return response;
+    };
 }]);
 ```
 ***HTML :***
