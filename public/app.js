@@ -41,14 +41,27 @@ angular.module('app',['smartTable'])
 		$scope.selectedRows = rows.map(function(row){return row.id;});
 	};
 
-	$scope.onUsersDataFetchStart = function(){
+	$scope.onUsersDataFetchStart = function(request){
 		$scope.loading = true;
-		console.log('start');
+		// request.method = 'GET';
+		// request.params = request.data;
+		// delete request.data;
+		return request;
 	};
 
-	$scope.onUsersDataFetchEnd = function(){
+	$scope.onUsersDataFetchEnd = function(response,error){
 		$scope.loading = false;
 		console.log('end');
+		if(error){
+			console.log('error occurred : ');
+			console.log(error);
+		}else{
+			// response.data.resultSet = response.data.data;
+			// response.data.totalItems = response.data.total;
+			// delete response.data.data;
+			// delete response.data.total;
+		}
+		return response;
 	};
 
 	$scope.onUserAction = function(field,actionId,user){

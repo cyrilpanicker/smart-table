@@ -259,25 +259,34 @@
                 if (params.$params.paginate) {
                     postData = Object.assign(postData, _params.pagerData, { pageSize: params.$params.count });
                 }
-                if (dataFetchStartCallback && typeof dataFetchStartCallback === 'function') {
-                    dataFetchStartCallback($defer, _params);
-                }
-                $http({
+                var request = {
                     method: 'POST',
                     url: apiUrlBasepath + parameters.apiUrl,
-                    data: postData
-                }).then(function (response) {
+                    data: postData,
+                    params:{},
+                    headers:{}
+                };                
+                if (dataFetchStartCallback && typeof dataFetchStartCallback === 'function') {
+                    request = dataFetchStartCallback(request);
+                }
+                $http(request).then(function (response) {
+                    if (dataFetchEndCallback && typeof dataFetchEndCallback === 'function') {
+                        response = dataFetchEndCallback(response,null);
+                    }
+                    if(!response.data.hasOwnProperty('resultSet')){
+                        throw new Error('resultSet node not found in response.');
+                    }
+                    if(!response.data.hasOwnProperty('totalItems')){
+                        throw new Error('totalItems node not found in response.');
+                    }
                     cachedResponse = response.data;
                     $defer.resolve(response.data, _params);
-                    if (dataFetchEndCallback && typeof dataFetchEndCallback === 'function') {
-                        dataFetchEndCallback(response.data, _params);
-                    }
                     model.loading = false;
                 }, function (error) {
                     console.log('SMART-TABLE - Error occurred while fetching data.');
                     console.log(error);
                     if (dataFetchEndCallback && typeof dataFetchEndCallback === 'function') {
-                        dataFetchEndCallback(null, _params, error);
+                        dataFetchEndCallback(null,error);
                     }
                     model.loading = false;
                 });

@@ -9,6 +9,7 @@
 - ngTableController - controller of the directive
     - creates new instance of 'ngTableParams' with default values for '$params' and assigns it to 'params' property under directive $scope.
     - sets a watch for 'params.$params' under directive scope.
+    - based on value of current page, multiplier is derived and is compared with previous multiplier. based on that server reload or client side reload is invoked.
     - adds 'sortBy' function to directive scope.
 
 - link function
