@@ -39,6 +39,7 @@ angular.module('app',['smartTable'])
 
 	$scope.onRowSelect = function(rows){
 		$scope.selectedRows = rows.map(function(row){return row.id;});
+		console.log(rows);
 	};
 
 	$scope.onUsersDataFetchStart = function(request){
